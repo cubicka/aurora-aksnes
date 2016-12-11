@@ -1,0 +1,129 @@
+.etalase {
+    background-color: #fff;
+    margin: 20px;
+    padding: 20px;
+    width: 60%;
+}
+
+.categoryLabelWrapper {
+    border: none;
+    border-top: solid 1px #c33;
+    height: 30px;
+    margin-top: 10px;
+    position: relative;
+}
+
+.categoryLabel {
+    background-color: #fff;
+    color: #c33;
+    display: inline-block;
+    left: -10px;
+    padding: 10px;
+    position: absolute;
+    top: -20px;
+}
+
+.item {
+    border: solid 1px #ccc;
+    float: left;
+    font-size: 13px;
+    height: 220px;
+    margin: 0 15px 15px;
+    position: relative;
+    text-align: center;
+    width: 150px;
+}
+
+.item:hover {
+    box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+}
+
+.item .counter {
+    border-top: solid 1px #333;
+    width: 100%;
+    height: 40px;
+    margin-top: 10px;
+    position: absolute;
+    bottom: 0;
+    overflow: hidden;
+    z-index: 0;
+}
+
+.counter .minus,
+.counter .plus {
+    display: block;
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    top: 0;
+    font-size: 24px;
+    line-height: 40px;
+    color: #fff;
+}
+
+.counter .input {
+    display: inline-block;
+    z-index: 10;
+    font-size: 20px;
+    width: 70px;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    position: relative;
+}
+
+.counter .minus {
+    left: 0;
+    background-color: #c33;
+}
+
+.counter .plus {
+    right: 0;
+    background-color: #3c3;
+}
+
+.counter .minus:hover {
+    box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+}
+
+.counter .plus:hover {
+    box-shadow: -2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+}
+
+.item .img {
+    display: block;
+    height: 120px;
+    width: 120px;
+    margin: 0 auto;
+}
+
+.item .selected {
+    display: none;
+    border: solid 5px #3c3;
+    position: absolute;
+    top: -5px;
+    left: -5px;
+    width: 100%;
+    height: 220px;
+}
+
+.item .selected.show {
+    display: block;
+}
+
+.item .harga {
+    display: block;
+}
+
+.loadingWrapper {
+    overflow: hidden;
+    height: 150px;
+}
+
+.loading {
+    display: block;
+    margin: 0 auto;
+    position: relative;
+    top: -80px;
+}

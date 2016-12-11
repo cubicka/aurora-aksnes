@@ -1,0 +1,48 @@
+.commends {
+    width: 160px;
+    height: 220px;
+    display: inline-block;
+    margin: 10px;
+    border: solid 1px #ccc;
+    border-radius: 5px;
+    position: relative;
+    text-align: center;
+    cursor: pointer;
+}
+
+/*.commends:hover {
+    border: solid 1px #c33;
+}
+*/
+.commends.selected {
+    border: solid 2px #3c3;
+}
+
+.cgambar {
+    display: block;
+    width: 100px;
+    height: 100px;
+    background-color: #333;
+    text-align: center;
+    margin: 5px auto;
+}
+
+.cname {
+    display: block;
+    position: absolute;
+    top: 125px;
+    padding: 0;
+    margin: 0px 3px;
+    left: 0;
+    right: 0;
+}
+
+.charga {
+    display: block;
+    position: absolute;
+    top: 160px;
+    padding: 0;
+    margin: 0 auto;
+    left: 0;
+    right: 0;
+}

@@ -1,0 +1,34 @@
+.counterWrapper {
+    position: relative;
+    text-align: center;
+}
+
+.value {
+    border: solid 1px #ccc;
+    display: inline-block;
+    height: 28px;
+    line-height: 30px;
+    text-align: center;
+    width: 30px;
+}
+
+.negBtn, .posBtn {
+    color: #fff;
+    cursor: pointer;
+    display: inline-block;
+    height: 30px;
+    line-height: 30px;
+    width: 30px;
+}
+
+.negBtn {
+    background-color: #c33;
+    border-bottom-left-radius: 5px;
+    border-top-left-radius: 5px;
+}
+
+.posBtn {
+    background-color: #3c3;
+    border-bottom-right-radius: 5px;
+    border-top-right-radius: 5px;
+}

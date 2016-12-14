@@ -26,7 +26,7 @@ const Etalase = React.createClass({
             const itemColls = lodash.map(etalase.items, (categoryItems) => {
                 const categoryName = categoryItems.category;
                 const items = lodash.map(categoryItems.items, (item) => {
-                    return <EtalaseItem key={item.id} {...item} count={cartCount[item.id] || 0} keyword={etalase.keyword} />
+                    return <EtalaseItem key={item.id} {...item} count={cartCount[item.id] || 0} keyword={etalase.keyword} category={categoryName} />
                 })
 
                 return (

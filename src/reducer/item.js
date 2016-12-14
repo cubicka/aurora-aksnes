@@ -8,7 +8,7 @@ export default (state = prevState || initialState, action) => {
         let stateUpdate = {};
 
         lodash.each(action.items, (item) => {
-            stateUpdate[item.id] = lodash.assign({}, state[item.idx], item);
+            stateUpdate[item.id] = lodash.assign({}, state[item.id], item);
         })
 
         const syalala = lodash.assign({}, state, stateUpdate);

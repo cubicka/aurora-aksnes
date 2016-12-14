@@ -79,6 +79,43 @@ function Etalase(state) {
     }
 }
 
+const etalaseUrl = "http://192.168.88.20:3001/etalase/etalase";
+
+export function ChangeName(itemID, newName, category) {
+    return (dispatch) => {
+        console.log('post', itemID, newName, category)
+        return fetch(etalaseUrl, {
+            method: "POST",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                itemID, newName, category
+            })
+        })
+        .then(function (resp) {
+            if (resp.ok) {
+                return resp.json();
+            }
+
+            return null;
+        })
+        .then(function (resp) {
+            if (resp) {
+                dispatch({
+                    type: "items/update",
+                    items: [{
+                        id: itemID,
+                        nama: newName
+                    }]
+                })
+            }
+            console.log('result', resp);
+        })
+    }
+}
+
 export function Query(keyword) {
     return (dispatch, getState) => {
         const state = getState();
@@ -107,7 +144,7 @@ export function Query(keyword) {
             return;
         }
 
-        return fetch("http://192.168.0.133:3001/v2/fleet/container/etalase?item=" + keyword, {
+        return fetch(etalaseUrl + "?item=" + keyword, {
             method: 'GET',
         })
         .then(function (results) {

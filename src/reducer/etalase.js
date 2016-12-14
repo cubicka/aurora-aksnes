@@ -2,6 +2,7 @@ import lodash from 'lodash'
 import SubHelper from '../helper/sub'
 import fetch from 'isomorphic-fetch'
 import {Sub as CartSub} from '../reducer/cart'
+import config from '../config'
 
 const initialState = {
     display: [],
@@ -79,7 +80,7 @@ function Etalase(state) {
     }
 }
 
-const etalaseUrl = "http://192.168.88.20:3001/etalase/etalase";
+const etalaseUrl = config.backendUrl;
 
 export function ChangeName(itemID, newName, category) {
     return (dispatch) => {

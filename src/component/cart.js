@@ -57,7 +57,7 @@ const Cart = React.createClass({
 
         return (
             <div className={style.cartWrapper}>
-                <span className={style.beli}>Beli</span>
+                <span className={style.beli} onClick={this.props.ShowSignIn}>Beli</span>
                 <h3>Cart</h3>
                 <h4>Total: Rp {totalBro}</h4>
                 <table className={style.table}>
@@ -85,6 +85,11 @@ const StateToProps = (state) => {
 
 const DispatchToProps = (dispatch, ownProps) => {
     return {
+        ShowSignIn: () => {
+            dispatch({
+                type: "auth/showSignIn"
+            })
+        },
         SortByJumlah: () => {
             dispatch({
                 type: "cart/sort",

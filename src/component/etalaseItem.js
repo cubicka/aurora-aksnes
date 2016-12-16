@@ -25,6 +25,12 @@ const EtalaseItem = React.createClass({
             this.editText.focus();
         }
     },
+    toBlur() {
+        this.setState({
+            editMode: false,
+            newName: this.props.nama
+        })
+    },
     trySubmit(e) {
         if (e.keyCode === 13) {
             this.props.ChangeName(this.props.id, this.state.newName, this.props.category);
@@ -32,6 +38,9 @@ const EtalaseItem = React.createClass({
                 editMode: false
             })
         }
+    },
+    hapus() {
+            this.props.ChangeName(this.props.id, '', this.props.category);
     },
     inc() {
         this.props.Inc();
@@ -49,18 +58,24 @@ const EtalaseItem = React.createClass({
         return (
             <div className={style.item}>
                 <div className={namakelas} />
+                <div style={{position: 'relative'}}>
                 <img className={style.img} src={image} alt={nama} />
                 {
                     this.state.editMode ? 
-                    <input value={this.state.newName} onChange={this.editName} onKeyDown={this.trySubmit} ref={(input) => { this.editText = input; }} /> :
+                    <input onBlur={this.toBlur} value={this.state.newName} onChange={this.editName} onKeyDown={this.trySubmit} ref={(input) => { this.editText = input; }} /> :
                     <span onClick={this.toEditMode}>{nama}</span>
                 }
                 <span className={style.harga} onClick={this.toEditMode}><strong>{harga}</strong> / {ukuran}</span>
+                </div>
                 <div className={style.counter}>
                     <div className={style.minus} onClick={this.dec}>-</div>
                     <div className={style.plus} onClick={this.inc}>+</div>
                     <input className={style.input} value={count} onChange={this.onChange} />
                 </div>
+                {
+
+                //<span className={style.delete} onClick={this.hapus} />
+                }
             </div>
         );
     }
@@ -68,6 +83,9 @@ const EtalaseItem = React.createClass({
 
 function DispatchToProps(dispatch, ownProps) {
     return {
+        hapus: (itemID, newName, category) => {
+            dispatch(ChangeName(itemID, '', category));
+        },
         Inc: () => {
             dispatch({
                 type: "cart/inc",

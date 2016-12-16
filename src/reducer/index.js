@@ -5,16 +5,17 @@ import cart from './cart'
 import category from './category'
 import etalase from './etalase'
 import item from './item'
+import auth from './auth'
 
-// import createLogger from 'redux-logger'
-// const logger = createLogger()
+import createLogger from 'redux-logger'
+const logger = createLogger()
 
 const store = createStore(
     combineReducers({
-        cart, category, etalase, item,
+        auth, cart, category, etalase, item,
         routing: routerReducer,
     }),
-    applyMiddleware(thunk)
+    applyMiddleware(thunk, logger)
 );
 
 export default store;

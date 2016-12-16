@@ -1,0 +1,51 @@
+.wrapper {
+	position: relative;
+}
+
+.backdrop {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 10000px;
+	height: 10000px;
+	background-color: #000;
+	opacity: 0.5;
+}
+
+.modal {
+	background-color: #fff;
+	border-radius: 10px;
+	width: 500px;
+	height: 400px;
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	margin: 0 auto;
+	text-align: center;
+}
+
+.title {
+	margin-top: 50px;
+	font-size: 25px;
+}
+
+.signInBtn {
+	position: relative;
+	display: inline-block;
+	width: 80px;
+	height: 40px;
+	background-color: #3c3;
+	border-radius: 10px;
+	line-height: 40px;
+	color: #fff;
+	cursor: pointer;
+}
+
+.inputWrapper input {
+	font-size: 20px;
+	display: block;
+	left: 0;
+	right: 0;
+	margin: 0 auto;
+}

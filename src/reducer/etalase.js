@@ -2,7 +2,7 @@ import lodash from 'lodash'
 import SubHelper from '../helper/sub'
 import fetch from 'isomorphic-fetch'
 import {Sub as CartSub} from '../reducer/cart'
-import config from '../config'
+import config from '../config.json'
 
 const initialState = {
     display: [],
@@ -46,6 +46,24 @@ export default (state = initialState, action) => {
         });
     }
 
+    if (action.type === "items/delete") {
+        const newDisplay = lodash.filter(state.display, (x) => {
+            return x !== action.id;
+        })
+
+        let newLibs = {};
+        lodash.each(state.libs, (arr, key) => {
+            newLibs[key] =  lodash.filter(arr, (x) => {
+                return x !== action.id;
+            })
+        })
+
+        return lodash.assign({}, state, {
+            display: newDisplay,
+            libs: newLibs
+        })
+    }
+
     return state;
 }
 
@@ -80,7 +98,7 @@ function Etalase(state) {
     }
 }
 
-const etalaseUrl = config.backendUrl;
+const etalaseUrl = config.backendUrl+"/etalase";
 
 export function ChangeName(itemID, newName, category) {
     return (dispatch) => {
@@ -104,13 +122,20 @@ export function ChangeName(itemID, newName, category) {
         })
         .then(function (resp) {
             if (resp) {
-                dispatch({
-                    type: "items/update",
-                    items: [{
-                        id: itemID,
-                        nama: newName
-                    }]
-                })
+                if (newName === "") {
+                    dispatch({
+                        type: "items/delete",
+                        id: itemID
+                    })
+                } else {
+                    dispatch({
+                        type: "items/update",
+                        items: [{
+                            id: itemID,
+                            nama: newName
+                        }]
+                    })
+                }
             }
             console.log('result', resp);
         })

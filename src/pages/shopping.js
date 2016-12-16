@@ -1,7 +1,7 @@
 import React from 'react'
 import CartComponent from '../component/cart'
 import EtalaseComponent from '../component/etalase'
-// import QueryComponent from '../component/query'
+import SignInComponent from '../component/signIn'
 
 const Pages = React.createClass({
     render() {
@@ -9,6 +9,7 @@ const Pages = React.createClass({
             <div>
                 <CartComponent />
                 <EtalaseComponent />
+                <SignInComponent />
             </div>
         );
     }

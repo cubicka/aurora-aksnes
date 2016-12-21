@@ -24,11 +24,11 @@
     "deploy" : {
         "live" : {
             "user" : "ubuntu",
-            "host" : "ec2-35-163-116-219.us-west-2.compute.amazonaws.com",
+            "host" : "ubuntu-aws",
             "ref" : "origin/master",
             "repo": "git@github.com:cubicka/aurora-aksnes.git",
             "path" : "/home/ubuntu/frontend",
-            "post-deploy" : "pm2 startOrRestart ecosystem.live.json --env live"
+            "post-deploy" : "npm i && pm2 startOrRestart ecosystem.live.json --env live"
         }
     }
 }

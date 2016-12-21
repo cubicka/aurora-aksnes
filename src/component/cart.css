@@ -2,7 +2,7 @@
     background-color: #fff;
     float: right;
     padding: 10px;
-    position: relative;
+    position: absolute;
     right: 10px;
     width: 31%;
 }
@@ -41,11 +41,13 @@
     cursor: pointer;
 }
 
-.table th.harga {
+.table th.harga,
+.shadowTable th.harga {
     width: 100px;
 }
 
-.table th.jumlah {
+.table th.jumlah,
+.shadowTable th.jumlah {
     width: 80px;
 }
 
@@ -61,8 +63,39 @@
     cursor: pointer;
 }
 
+.undo {
+    display: block;
+    /*position: absolute;*/
+    /*top: 10px;*/
+    /*right: 10px;*/
+    background-color: #3c3;
+    padding: 5px;
+    border-radius: 3px;
+    color: #fff;
+    cursor: pointer;
+    width: 100px;
+}
+
 .beli:hover {
     border: solid 1px #c33;
     top: 9px;
     right: 9px;
+}
+
+.shadowTable {
+    width: 100%;
+    border-spacing: 0;
+    border-collapse: collapse;
+    margin: 20px 0 10px;
+}
+
+.shadowTable tr,
+.shadowTable th {
+    padding: 5px;
+    cursor: pointer;
+    /*border: none;*/
+}
+
+.shadowTable .tambah {
+    border: solid 1px #000;
 }

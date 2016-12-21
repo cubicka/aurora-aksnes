@@ -36,7 +36,9 @@ const initialState = {
     timeout: {},
     idx: [0, 0],
     lastIdx: 0,
-    sortOrder: [false, false, false]
+    sortOrder: [false, false, false],
+    prevState: [],
+    nextState: []
 };
 
 function SortCart(cart, {sortID, itemColls}) {
@@ -93,19 +95,76 @@ function AddCartAfter(state, cartID) {
 
 const prevState = localStorage.cart && JSON.parse(localStorage.cart);
 
+function SaveToComp(state) {
+    localStorage.cart = JSON.stringify(state);
+    return state;
+}
+
+function OneWay(oldState, newState) {
+    let syalala = lodash.assign({}, oldState);
+    delete syalala.prevState;
+    delete syalala.nextState;
+
+    let nexx = lodash.assign({}, newState, {
+        prevState: [...(oldState.prevState || [])],
+        nextState: []
+    });
+
+    nexx.prevState.push(JSON.stringify(syalala));
+    localStorage.cart = JSON.stringify(nexx);
+
+    return nexx;
+}
+
+function Undo(state) {
+    if (!state.prevState || state.prevState.length === 0) {
+        return state;
+    }
+
+    let prevs = JSON.parse(state.prevState[state.prevState.length - 1]);
+    const sliced = state.prevState ? state.prevState.slice(0, state.prevState.length -1) : [];
+    prevs.prevState = sliced;
+    prevs.nextState = [...(state.nextState || [])];
+
+    let syalala = lodash.assign({}, state);
+    delete syalala.prevState;
+    delete syalala.nextState;
+
+    prevs.nextState.push(JSON.stringify(syalala));
+    return prevs;
+}
+
+function Redo(state) {
+    if (!state.nextState || state.nextState.length === 0) {
+        return state;
+    }
+
+    let prevs = JSON.parse(state.nextState[state.nextState.length - 1]);
+    const sliced = state.nextState ? state.nextState.slice(0, state.nextState.length -1) : [];
+    prevs.nextState = sliced;
+    prevs.prevState = [...(state.prevState || [])];
+
+    let syalala = lodash.assign({}, state);
+    delete syalala.prevState;
+    delete syalala.nextState;
+
+    prevs.prevState.push(JSON.stringify(syalala));
+    return prevs;
+}
+
 export default (state = prevState || initialState, action) => {
     switch(action.type) {
+        case "cart/undo": {
+            return Undo(state);
+        }
+
+        case "cart/redo": {
+            return Redo(state);
+        }
+
         case "cart/update": {
             const {id, attr, value} = action;
             const oldObj = state[id];
-
-            console.log('1');
-
-            // return lodash.assign({}, state, {
-            //     [id]: lodash.assign({}, oldObj, {
-            //         [attr]: value
-            //     })
-            // })
 
             const syalala = lodash.assign({}, state, {
                 [id]: lodash.assign({}, oldObj, {
@@ -113,11 +172,7 @@ export default (state = prevState || initialState, action) => {
                 })
             })
 
-            console.log('2');
-            localStorage.cart = JSON.stringify(syalala);
-            console.log('3');
-
-            return syalala;
+            return SaveToComp(syalala);
         }
 
         case "cart/updateQuantity": {
@@ -137,8 +192,7 @@ export default (state = prevState || initialState, action) => {
                 }),
             })
 
-            localStorage.cart = JSON.stringify(syalala);
-            return syalala;
+            return OneWay(state, syalala);
         }
 
         case "cart/updateItem": {
@@ -170,8 +224,11 @@ export default (state = prevState || initialState, action) => {
                 cartItem: id === lastIdx ? [...cartItem, lastIdx + 1] : cartItem
             })
 
-            localStorage.cart = JSON.stringify(syalala);
-            return syalala;
+            if ('quantity' in oldObj) {
+                return SaveToComp(syalala);
+            } else {
+                return OneWay(state, syalala);
+            }
         }
 
         case "cart/move": {
@@ -179,8 +236,7 @@ export default (state = prevState || initialState, action) => {
                 idx: action.idx
             });
 
-            localStorage.cart = JSON.stringify(syalala);
-            return syalala;
+            return SaveToComp(syalala);
         }
 
         case "cart/timeout": {
@@ -190,22 +246,19 @@ export default (state = prevState || initialState, action) => {
                 })
             })
 
-            localStorage.cart = JSON.stringify(syalala);
-            return syalala;
+            return SaveToComp(syalala);
         }
 
         case "cart/inc": {
             const syalala = Inc(state, action);
 
-            localStorage.cart = JSON.stringify(syalala);
-            return syalala;
+            return OneWay(state, syalala);
         }
 
         case "cart/dec": { 
             const syalala = Dec(state, action);
 
-            localStorage.cart = JSON.stringify(syalala);
-            return syalala;
+            return OneWay(state, syalala);
         }
 
         case "cart/sort": {
@@ -221,8 +274,7 @@ export default (state = prevState || initialState, action) => {
                 sortOrder: newSort
             })
 
-            localStorage.cart = JSON.stringify(syalala);
-            return syalala;
+            return SaveToComp(syalala);
         }
 
         default: return state;

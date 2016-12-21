@@ -9,6 +9,25 @@ import {Sub as CartSub} from '../reducer/cart'
 import EtalaseStyle from './etalase.css'
 
 const Etalase = React.createClass({
+    getInitialState() {
+        return {
+            shown: {},
+            perRow: 5
+        }
+    },
+    componentDidMount() {
+        const width = document.getElementById('etalase') && document.getElementById('etalase').clientWidth;
+        this.setState({
+            perRow: parseInt(Math.floor(width / 182), 10)
+        })
+    },
+    toggleShown(categoryName, nrow) {
+        this.setState({
+            shown: lodash.assign({}, this.state.shown, {
+                [categoryName]: nrow
+            })
+        })
+    },
     render() {
         const {etalase, cartCount} = this.props;
 
@@ -25,12 +44,28 @@ const Etalase = React.createClass({
         if (etalase.isDisplay) {
             const itemColls = lodash.map(etalase.items, (categoryItems) => {
                 const categoryName = categoryItems.category;
-                const items = lodash.map(categoryItems.items, (item) => {
+                const {shown} = this.state;
+
+                let shownItems = [];
+                if (!(categoryName in shown) || shown[categoryName] === 1) {
+                    shownItems = categoryItems.items.slice(0, this.state.perRow);
+                } else {
+                    shownItems = categoryItems.items;
+                }
+
+                const items = lodash.map(shownItems, (item) => {
                     return <EtalaseItem key={item.id} {...item} count={cartCount[item.id] || 0} keyword={etalase.keyword} category={categoryName} />
                 })
 
                 return (
-                    <div key={categoryName}>
+                    <div key={categoryName} className={EtalaseStyle.etaWrapper}>
+                        <span className={EtalaseStyle.pagingWrapper}>
+                            <span className={EtalaseStyle.categoryToggle} onClick={this.toggleShown.bind(null, categoryName)}>Toggle</span>
+                            <span className={EtalaseStyle.categoryToggle} onClick={this.toggleShown.bind(null, categoryName)}>None</span>
+                            <span className={EtalaseStyle.categoryToggle} onClick={this.toggleShown.bind(null, categoryName)}>1 Row</span>
+                            <span className={EtalaseStyle.categoryToggle} onClick={this.toggleShown.bind(null, categoryName)}>2 Rows</span>
+                            <span className={EtalaseStyle.categoryToggle} onClick={this.toggleShown.bind(null, categoryName)}>All</span>
+                        </span>
                         <CategoryLabel name={categoryName} />
                         {items}
                         <div style={{clear:'both'}} />
@@ -39,7 +74,7 @@ const Etalase = React.createClass({
             })
 
             return (
-                <div className={EtalaseStyle.etalase}>
+                <div className={EtalaseStyle.etalase} id="etalase">
                     {
                         itemColls
                     }

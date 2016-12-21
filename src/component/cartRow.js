@@ -92,7 +92,7 @@ const CartRow = React.createClass({
         }
     },
     render() {
-        const {nama, quantity, price, inDisplay} = this.props;
+        const {nama, quantity, price, inDisplay, placehold} = this.props;
 
         return (
             <tr className={inDisplay ? style.green : ""}>
@@ -110,7 +110,8 @@ const CartRow = React.createClass({
                       ref={(input) => { this.general = input; }} 
                       onKeyDown={this.moveInGeneral} 
                       onChange={this.changeKeyword}
-                      onFocus={this.toGeneral} value={nama || ""} />
+                      onFocus={this.toGeneral} value={nama || ""}
+                      placeholder={placehold ? "Bisa ketik di sini" : ""} />
                 </td>
                 <td>
                     <input className={style.price + ' ' + style.right} 

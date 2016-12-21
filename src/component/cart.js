@@ -43,8 +43,8 @@ const Cart = React.createClass({
         // })
         // .value()
 
-        const items = lodash.map(cart.items, (item) => {
-            return <CartRow key={item.idx} activeIdx={cart.idx} {...item} />
+        const items = lodash.map(cart.items, (item, urutan) => {
+            return <CartRow key={item.idx} activeIdx={cart.idx} {...item} placehold={urutan === cart.items.length-1} />
         });
 
         const totalBro = lodash.reduce(cart.items, (acc, item) => {
@@ -60,6 +60,8 @@ const Cart = React.createClass({
                 <span className={style.beli} onClick={this.props.ShowSignIn}>Beli</span>
                 <h3>Cart</h3>
                 <h4>Total: Rp {totalBro}</h4>
+                <span className={style.undo} onClick={this.props.Undo}>Undo</span>
+                <span className={style.undo} onClick={this.props.Redo}>Redo</span>
                 <table className={style.table}>
                     <thead>
                         <tr>
@@ -71,6 +73,17 @@ const Cart = React.createClass({
                     <tbody>
                         {items}
                     </tbody>
+                </table>
+                <table className={style.shadowTable}>
+                    <thead>
+                        <tr>
+                            <th className={style.jumlah} />
+                            <th className={style.tambah}>
+                                Tambah Barang
+                            </th>
+                            <th className={style.harga} />
+                        </tr>
+                    </thead>
                 </table>
             </div>
         );
@@ -85,6 +98,16 @@ const StateToProps = (state) => {
 
 const DispatchToProps = (dispatch, ownProps) => {
     return {
+        Undo: () => {
+            dispatch({
+                type: "cart/undo"
+            })
+        },
+        Redo: () => {
+            dispatch({
+                type: "cart/redo"
+            })
+        },
         ShowSignIn: () => {
             dispatch({
                 type: "auth/showSignIn"

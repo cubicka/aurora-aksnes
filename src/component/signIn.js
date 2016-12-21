@@ -14,16 +14,17 @@ const SignIn = React.createClass({
 			<div className={styles.wrapper}>
 				<div className={styles.backdrop} />
 				<div className={styles.modal}>
-					<h5 className={styles.title}>Sign In</h5>
+					<span className={styles.title}>Masuk ke Akun Anda</span>
 					<div className={styles.inputWrapper}>
-						<label>Username</label>
+						<label className={styles.inputLabel}>Username</label>
 						<input />
 					</div>
 					<div className={styles.inputWrapper}>
-						<label>Password</label>
+						<label className={styles.inputLabel}>Password</label>
 						<input type='password' />
 					</div>
-					<span className={styles.signInBtn} onClick={this.props.HideSignIn}>Sign In</span>
+					<span className={styles.signInBtn} onClick={this.props.HideSignIn}>Masuk</span>
+					<span className={styles.toRegister}>Belum punya akun? <span className={styles.registerLink}>Register disini</span></span>
 				</div>
 			</div>
 		);

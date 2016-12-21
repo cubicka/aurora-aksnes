@@ -1,5 +1,5 @@
 const initialState = {
-	showSignIn: false
+	showSignIn: true
 }
 
 function Reducer(state = initialState, action) {

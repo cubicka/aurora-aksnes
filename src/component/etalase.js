@@ -22,11 +22,20 @@ const Etalase = React.createClass({
         })
     },
     toggleShown(categoryName, nrow) {
-        this.setState({
-            shown: lodash.assign({}, this.state.shown, {
-                [categoryName]: nrow
+        
+        if (!(categoryName in this.state.shown) || this.state.shown[categoryName] === 1) {
+            this.setState({
+                shown: lodash.assign({}, this.state.shown, {
+                    [categoryName]: -1
+                })
             })
-        })
+        } else {
+            this.setState({
+                shown: lodash.assign({}, this.state.shown, {
+                    [categoryName]: 1
+                })
+            })
+        }
     },
     render() {
         const {etalase, cartCount} = this.props;

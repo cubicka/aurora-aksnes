@@ -1,0 +1,34 @@
+{
+    /**
+     * Application configuration section
+     * http://pm2.keymetrics.io/docs/usage/application-declaration/
+     */
+    "apps" : [
+        {
+            "name" : "frontend",
+            "script" : "scripts/start.js",
+            "env_staging": {
+                "NODE_ENV": "production",
+                "PORT": 3000
+            },
+            "merge_logs": true,
+            "out_file": "/home/ubuntu/.pm2/logs/frontend-out.log",
+            "error_file": "/home/ubuntu/.pm2/logs/frontend-error.log"
+        }
+    ],
+
+    /**
+     * Deployment section
+     * http://pm2.keymetrics.io/docs/usage/deployment/
+     */
+    "deploy" : {
+        "live" : {
+            "user" : "ubuntu",
+            "host" : "ec2-35-163-116-219.us-west-2.compute.amazonaws.com",
+            "ref" : "origin/master",
+            "repo": "git@github.com:cubicka/aurora-aksnes.git",
+            "path" : "/home/ubuntu/frontend",
+            "post-deploy" : "pm2 startOrRestart ecosystem.live.json --env live"
+        }
+    }
+}

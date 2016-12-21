@@ -6,7 +6,7 @@
     "apps" : [
         {
             "name" : "frontend",
-            "script" : "scripts/start.js",
+            "script" : "server.js",
             "env_staging": {
                 "NODE_ENV": "production",
                 "PORT": 3000
@@ -28,7 +28,7 @@
             "ref" : "origin/master",
             "repo": "git@github.com:cubicka/aurora-aksnes.git",
             "path" : "/home/ubuntu/frontend",
-            "post-deploy" : "npm i && pm2 startOrRestart ecosystem.live.json --env live"
+            "post-deploy" : "npm i && npm run build && pm2 startOrRestart ecosystem.live.json --env live"
         }
     }
 }

@@ -53,20 +53,19 @@ const EtalaseItem = React.createClass({
     },
     render() {
         const {nama, harga, ukuran, image, count} = this.props;
-        const namakelas = count > 0 ? style.show + " " + style.selected : style.selected;
+        const namakelas = count > 0 ? style.item + " " + style.selected : style.item;
 
         return (
-            <div className={style.item}>
-                <div className={namakelas} />
+            <div className={namakelas}>
                 <div style={{position: 'relative'}}>
-                <img className={style.img} src={image} alt={nama} />
-                {
-                    this.state.editMode ? 
-                    <input onBlur={this.toBlur} value={this.state.newName} onChange={this.editName} onKeyDown={this.trySubmit} ref={(input) => { this.editText = input; }} /> :
-                    <span onClick={this.toEditMode}>{nama}</span>
-                }
-                <span className={style.harga} onClick={this.toEditMode}><strong>{harga}</strong> / {ukuran}</span>
-                </div>
+                    <img className={style.img} src={image} alt={nama} />
+                    {
+                        this.state.editMode ? 
+                        <input onBlur={this.toBlur} value={this.state.newName} onChange={this.editName} onKeyDown={this.trySubmit} ref={(input) => { this.editText = input; }} /> :
+                        <span className={style.itemName} onClick={this.toEditMode}>{nama}</span>
+                    }
+                    </div>
+                <span className={style.harga} onClick={this.toEditMode}><strong>Rp {harga}</strong> / {ukuran}</span>
                 <div className={style.counter}>
                     <div className={style.minus} onClick={this.dec}>-</div>
                     <div className={style.plus} onClick={this.inc}>+</div>

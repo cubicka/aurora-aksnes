@@ -116,8 +116,8 @@ const CartRow = React.createClass({
                 <td className={style.priceColumn}>
                     <input className={style.price + ' ' + style.right} 
                       type="text"
-                      ref={(input) => { this.price = input; }} 
-                      value={ nama ? ((quantity || 0) * price) : ""}
+                      ref={(input) => { this.price = input; }}
+                      value={ nama ? ((quantity || 0) * price) : "" }
                       onChange={null}
                       disabled={true} />
                 </td>

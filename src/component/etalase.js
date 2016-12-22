@@ -18,31 +18,15 @@ const Etalase = React.createClass({
     componentDidMount() {
         const width = document.getElementById('etalase') && document.getElementById('etalase').clientWidth;
         this.setState({
-            perRow: parseInt(Math.floor(width / 182), 10)
+            perRow: parseInt(Math.floor(width / 185), 10)
         })
     },
     toggleShown(categoryName, nrow) {
-        if (nrow === -2) {
-            if (categoryName in this.state.shown && this.state.shown[categoryName] === -1) {
-                this.setState({
-                    shown: lodash.assign({}, this.state.shown, {
-                        [categoryName]: 1
-                    })
-                })
-            } else {
-                this.setState({
-                    shown: lodash.assign({}, this.state.shown, {
-                        [categoryName]: -1
-                    })
-                })
-            }
-        } else {
-            this.setState({
-                shown: lodash.assign({}, this.state.shown, {
-                    [categoryName]: nrow
-                })
+        this.setState({
+            shown: lodash.assign({}, this.state.shown, {
+                [categoryName]: nrow
             })
-        }
+        })
     },
     render() {
         const {etalase, cartCount} = this.props;
@@ -61,10 +45,13 @@ const Etalase = React.createClass({
             const itemColls = lodash.map(etalase.items, (categoryItems) => {
                 const categoryName = categoryItems.category;
                 const {shown, perRow} = this.state;
+                const please = (categoryName in shown) ? shown[categoryName] : 1;
 
                 let shownItems = [];
                 if (!(categoryName in shown)) {
                     shownItems = categoryItems.items.slice(0, perRow);
+                } else if (shown[categoryName] === -1) {
+                    shownItems = categoryItems.items;
                 } else {
                     shownItems = categoryItems.items.slice(0, shown[categoryName] * perRow);
                 }
@@ -76,13 +63,9 @@ const Etalase = React.createClass({
                 return (
                     <div key={categoryName} className={EtalaseStyle.etaWrapper}>
                         <span className={EtalaseStyle.pagingWrapper}>
-                            <span className={EtalaseStyle.categoryToggle} onClick={this.toggleShown.bind(null, categoryName, -2)}>More Items</span>
-                            <span className={EtalaseStyle.categoryOne}>
-                                <span className={EtalaseStyle.categoryToggle} onClick={this.toggleShown.bind(null, categoryName, 0)}>None</span>
-                                <span className={EtalaseStyle.categoryToggle} onClick={this.toggleShown.bind(null, categoryName, 1)}>1 Row</span>
-                                <span className={EtalaseStyle.categoryToggle} onClick={this.toggleShown.bind(null, categoryName, 2)}>2 Rows</span>
-                                <span className={EtalaseStyle.categoryToggle} onClick={this.toggleShown.bind(null, categoryName, -1)}>All</span>
-                            </span>
+                            <span className={EtalaseStyle.categoryToggle + " " + (please === 0 && EtalaseStyle.categorySelected)} onClick={this.toggleShown.bind(null, categoryName, 0)}>Sembunyikan</span>
+                            <span className={EtalaseStyle.categoryToggle + " " + (please === 1 && EtalaseStyle.categorySelected)} onClick={this.toggleShown.bind(null, categoryName, 1)}>1 Baris</span>
+                            <span className={EtalaseStyle.categoryToggle + " " + (please === -1 && EtalaseStyle.categorySelected)} onClick={this.toggleShown.bind(null, categoryName, -1)}>Semua</span>
                         </span>
                         <CategoryLabel name={categoryName} />
                         {items}

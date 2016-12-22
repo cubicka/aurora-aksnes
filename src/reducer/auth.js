@@ -59,7 +59,7 @@ export function SignIn(username, password) {
 }
 
 const initialState = {
-    modal: "register"
+    modal: ""
 }
 
 function Reducer(state = initialState, action) {

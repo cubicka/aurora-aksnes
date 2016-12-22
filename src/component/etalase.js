@@ -76,7 +76,7 @@ const Etalase = React.createClass({
                 return (
                     <div key={categoryName} className={EtalaseStyle.etaWrapper}>
                         <span className={EtalaseStyle.pagingWrapper}>
-                            <span className={EtalaseStyle.categoryToggle} onClick={this.toggleShown.bind(null, categoryName, -2)}>Toggle</span>
+                            <span className={EtalaseStyle.categoryToggle} onClick={this.toggleShown.bind(null, categoryName, -2)}>More Items</span>
                             <span className={EtalaseStyle.categoryOne}>
                                 <span className={EtalaseStyle.categoryToggle} onClick={this.toggleShown.bind(null, categoryName, 0)}>None</span>
                                 <span className={EtalaseStyle.categoryToggle} onClick={this.toggleShown.bind(null, categoryName, 1)}>1 Row</span>

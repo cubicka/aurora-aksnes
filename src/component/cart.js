@@ -27,6 +27,22 @@ import CartRow from './cartRow'
 // })
 
 const Cart = React.createClass({
+    getInitialState() {
+        return {
+            isFiltering: false
+        }
+    },
+    openFiltering() {
+        this.setState({
+            isFiltering: true
+        })
+        this.filterInput.focus();
+    },
+    closeFiltering() {
+        this.setState({
+            isFiltering: false
+        })
+    },
     hehe() {
         this.props.SortByHarga(this.props.cart)
     },
@@ -55,36 +71,38 @@ const Cart = React.createClass({
             return acc + (parseInt(item.price, 10) * item.quantity);
         }, 0);
 
+        const filteringClass = this.state.isFiltering ? (style.filterWrapper + " " + style.isFiltering) : style.filterWrapper;
+
         return (
             <div className={style.cartWrapper}>
-                <span className={style.beli} onClick={this.props.ShowSignIn}>Beli</span>
-                <h3>Cart</h3>
-                <h4>Total: Rp {totalBro}</h4>
-                <span className={style.undo} onClick={this.props.Undo}>Undo</span>
-                <span className={style.undo} onClick={this.props.Redo}>Redo</span>
+                <span className={style.totalWrapper}>
+                    Total <span className={style.totalAmount}>{totalBro}</span>
+                </span>
+                <span className={style.controlWrapper}>
+                    <img src="undo.png" alt="" className={style.undo} />
+                    <img src="redo.png" alt="" className={style.redo} />
+                </span>
+                <span className={style.cartTitle}>My Cart</span>
+                <span className={filteringClass}>
+                    <input className={style.cartFilter} 
+                        ref={(input) => { this.filterInput = input; }} onBlur={this.closeFiltering} />
+                    <span className={style.cartFilterIcon} onClick={this.openFiltering} />
+                </span>
+                <span className={style.headerWrapper}>
+                    <span className={style.headerNama} onClick={this.props.SortByNama}>Nama</span>
+                    <span className={style.headerJumlah} onClick={this.props.SortByJumlah}>Jumlah</span>
+                    <span className={style.headerHarga} onClick={this.hehe}>Harga</span>
+                </span>
                 <table className={style.table}>
-                    <thead>
-                        <tr>
-                            <th className={style.jumlah} onClick={this.props.SortByJumlah}>Jumlah</th>
-                            <th onClick={this.props.SortByNama}>Nama</th>
-                            <th className={style.harga} onClick={this.hehe}>Harga</th>
-                        </tr>
-                    </thead>
                     <tbody>
                         {items}
                     </tbody>
                 </table>
-                <table className={style.shadowTable}>
-                    <thead>
-                        <tr>
-                            <th className={style.jumlah} />
-                            <th className={style.tambah}>
-                                Tambah Barang
-                            </th>
-                            <th className={style.harga} />
-                        </tr>
-                    </thead>
-                </table>
+                <span className={style.submitWrapper}>
+                    <span className={style.submitTotal}>Total</span>
+                    <span className={style.submitAmount}>Rp {totalBro}</span>
+                    <span className={style.submitBtn}>Beli</span>
+                </span>
             </div>
         );
     }

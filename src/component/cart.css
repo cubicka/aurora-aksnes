@@ -1,10 +1,12 @@
 .cartWrapper {
     background-color: #fff;
     float: right;
-    padding: 10px;
+    padding: 12px 16px 17px 12px;
     position: absolute;
     right: 10px;
     width: 31%;
+    border-radius: 4px;
+    margin-bottom: 50px;
 }
 
 .cartItem {
@@ -63,19 +65,6 @@
     cursor: pointer;
 }
 
-.undo {
-    display: block;
-    /*position: absolute;*/
-    /*top: 10px;*/
-    /*right: 10px;*/
-    background-color: #3c3;
-    padding: 5px;
-    border-radius: 3px;
-    color: #fff;
-    cursor: pointer;
-    width: 100px;
-}
-
 .beli:hover {
     border: solid 1px #c33;
     top: 9px;
@@ -98,4 +87,144 @@
 
 .shadowTable .tambah {
     border: solid 1px #000;
+}
+
+.cartTitle {
+    font-size: 18px;
+    color: #187be7;
+}
+
+.filterWrapper {
+    width: 30px;
+    right: 5px;
+    position: relative;
+    float: right;
+    -webkit-transition: width 0.5s;
+    transition: width 0.5s;
+}
+
+.cartFilter {
+    width: 100%;
+    height: 30px;
+    border: solid 1px #b0b0b0;
+    border-radius: 4px;
+    padding: 0;
+    text-indent: 10px;
+    font-size: 16px;
+}
+
+.filterWrapper.isFiltering {
+    width: 60%;
+}
+
+.cartFilterIcon {
+    opacity: 0.7;
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    width: 34px;
+    height: 34px;
+    cursor: pointer;
+    background-image: url("/search.png");
+    -webkit-background-size: 25px;
+    background-size: 25px;
+    background-repeat: no-repeat;
+    background-position: 8px 4px;
+    -webkit-transition: opacity 0.5s;
+    transition: opacity 0.5s;
+}
+
+.filterWrapper.isFiltering .cartFilterIcon {
+    opacity: 0;
+}
+
+.headerWrapper {
+    font-size: 15px;
+    color: #575757;
+    display: block;
+    margin-top: 20px;
+    height: 27px;
+    border-bottom: solid 1px #979797;
+    margin-bottom: 14px;
+}
+
+.headerNama, .headerJumlah, .headerHarga {
+    position: absolute;
+    cursor: pointer;
+}
+
+.headerNama {
+    left: 4%;
+}
+
+.headerJumlah {
+    left: 50%;
+}
+
+.headerHarga {
+    left: 75%;
+}
+
+.controlWrapper {
+    display: block;
+    border-bottom: solid 1px #979797;
+    margin-bottom: 20px;
+}
+
+.undo, .redo {
+    width: 23px;
+    opacity: 0.5;
+    margin-left: 10px;
+    margin-right: 5px;
+}
+
+.totalWrapper { 
+    position: absolute;
+    right: 25px;
+    font-size: 16px;
+    color: #868686;
+}
+
+.totalAmount {
+    font-size: 18px;
+    color: #333;
+}
+
+.submitWrapper {
+    position: relative;
+    display: block;
+    border-top: solid 1px #ccc;
+    margin-top: 30px;
+}
+
+.submitTotal {
+    display: block;
+    font-size: 16px;
+    color: #333;
+    margin-top: 10px;
+}
+
+.submitAmount {
+    display: block;
+    font-size: 22px;
+    color: #333;
+    font-weight: 600;
+}
+
+.submitBtn {
+    width: 90px;
+    height: 36px;
+    border-radius: 4px;
+    background-color: #ec722d;
+    position: absolute;
+    top: 8px;
+    right: 0;
+    line-height: 36px;
+    text-align: center;
+    color: #fff;
+    cursor: pointer;
+}
+
+.submitBtn:hover {
+    box-shadow: 2px 2px #aaa;
 }

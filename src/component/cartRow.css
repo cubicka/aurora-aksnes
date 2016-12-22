@@ -40,3 +40,22 @@ td input.right {
 .green input.right {
     border-right: solid 1px #3c3;
 }
+
+.delColumn {
+    width: 30px;
+    text-align: center;
+    color: #c33;
+    cursor: pointer;
+}
+
+.priceCol {
+    width: 15%;
+}
+
+.quantityCol {
+    width: 18%;
+}
+
+.namaCol {
+    width: 48%;
+}

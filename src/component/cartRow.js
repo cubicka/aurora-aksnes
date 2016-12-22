@@ -96,15 +96,7 @@ const CartRow = React.createClass({
 
         return (
             <tr className={inDisplay ? style.green : ""}>
-                <td>
-                    <input className={style.quantity} 
-                      type="text"
-                      ref={(input) => { this.quantity = input; }} 
-                      onKeyDown={this.moveInQuantity} 
-                      onChange={this.changeQuantity}
-                      onFocus={this.toQuantity} value={quantity || (quantity === 0 ? "0" : "")} />
-                </td>
-                <td>
+                <td className={style.namaCol}>
                     <input className={style.general} 
                       type="text"
                       ref={(input) => { this.general = input; }} 
@@ -113,13 +105,24 @@ const CartRow = React.createClass({
                       onFocus={this.toGeneral} value={nama || ""}
                       placeholder={placehold ? "Bisa ketik di sini" : ""} />
                 </td>
-                <td>
+                <td className={style.quantityCol}>
+                    <input className={style.quantity} 
+                      type="text"
+                      ref={(input) => { this.quantity = input; }} 
+                      onKeyDown={this.moveInQuantity} 
+                      onChange={this.changeQuantity}
+                      onFocus={this.toQuantity} value={quantity || (quantity === 0 ? "0" : "")} />
+                </td>
+                <td className={style.priceColumn}>
                     <input className={style.price + ' ' + style.right} 
                       type="text"
                       ref={(input) => { this.price = input; }} 
                       value={ nama ? ((quantity || 0) * price) : ""}
                       onChange={null}
                       disabled={true} />
+                </td>
+                <td className={style.delColumn}>
+                    X
                 </td>
             </tr>
         );

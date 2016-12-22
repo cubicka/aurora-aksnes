@@ -10,7 +10,7 @@ const Header = React.createClass({
                     <span className={style.login} onClick={this.props.ToSignIn}>Log In</span>
                     <span className={style.signIn} onClick={this.props.ToRegister}>Sign Up</span>
                 </span>
-                <input className={style.search} />
+                <input className={style.search} placeholder="Mencari sesuatu ..?" />
             </div>
         );
     }

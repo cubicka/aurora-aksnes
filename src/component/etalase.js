@@ -22,17 +22,24 @@ const Etalase = React.createClass({
         })
     },
     toggleShown(categoryName, nrow) {
-        
-        if (!(categoryName in this.state.shown) || this.state.shown[categoryName] === 1) {
-            this.setState({
-                shown: lodash.assign({}, this.state.shown, {
-                    [categoryName]: -1
+        if (nrow === -2) {
+            if (categoryName in this.state.shown && this.state.shown[categoryName] === -1) {
+                this.setState({
+                    shown: lodash.assign({}, this.state.shown, {
+                        [categoryName]: 1
+                    })
                 })
-            })
+            } else {
+                this.setState({
+                    shown: lodash.assign({}, this.state.shown, {
+                        [categoryName]: -1
+                    })
+                })
+            }
         } else {
             this.setState({
                 shown: lodash.assign({}, this.state.shown, {
-                    [categoryName]: 1
+                    [categoryName]: nrow
                 })
             })
         }
@@ -48,18 +55,18 @@ const Etalase = React.createClass({
                     </div>
                 </div>
             );
-        }
+        }   
 
         if (etalase.isDisplay) {
             const itemColls = lodash.map(etalase.items, (categoryItems) => {
                 const categoryName = categoryItems.category;
-                const {shown} = this.state;
+                const {shown, perRow} = this.state;
 
                 let shownItems = [];
-                if (!(categoryName in shown) || shown[categoryName] === 1) {
-                    shownItems = categoryItems.items.slice(0, this.state.perRow);
+                if (!(categoryName in shown)) {
+                    shownItems = categoryItems.items.slice(0, perRow);
                 } else {
-                    shownItems = categoryItems.items;
+                    shownItems = categoryItems.items.slice(0, shown[categoryName] * perRow);
                 }
 
                 const items = lodash.map(shownItems, (item) => {
@@ -69,11 +76,13 @@ const Etalase = React.createClass({
                 return (
                     <div key={categoryName} className={EtalaseStyle.etaWrapper}>
                         <span className={EtalaseStyle.pagingWrapper}>
-                            <span className={EtalaseStyle.categoryToggle} onClick={this.toggleShown.bind(null, categoryName)}>Toggle</span>
-                            <span className={EtalaseStyle.categoryToggle} onClick={this.toggleShown.bind(null, categoryName)}>None</span>
-                            <span className={EtalaseStyle.categoryToggle} onClick={this.toggleShown.bind(null, categoryName)}>1 Row</span>
-                            <span className={EtalaseStyle.categoryToggle} onClick={this.toggleShown.bind(null, categoryName)}>2 Rows</span>
-                            <span className={EtalaseStyle.categoryToggle} onClick={this.toggleShown.bind(null, categoryName)}>All</span>
+                            <span className={EtalaseStyle.categoryToggle} onClick={this.toggleShown.bind(null, categoryName, -2)}>Toggle</span>
+                            <span className={EtalaseStyle.categoryOne}>
+                                <span className={EtalaseStyle.categoryToggle} onClick={this.toggleShown.bind(null, categoryName, 0)}>None</span>
+                                <span className={EtalaseStyle.categoryToggle} onClick={this.toggleShown.bind(null, categoryName, 1)}>1 Row</span>
+                                <span className={EtalaseStyle.categoryToggle} onClick={this.toggleShown.bind(null, categoryName, 2)}>2 Rows</span>
+                                <span className={EtalaseStyle.categoryToggle} onClick={this.toggleShown.bind(null, categoryName, -1)}>All</span>
+                            </span>
                         </span>
                         <CategoryLabel name={categoryName} />
                         {items}

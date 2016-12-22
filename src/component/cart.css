@@ -176,6 +176,7 @@
     opacity: 0.5;
     margin-left: 10px;
     margin-right: 5px;
+    cursor: pointer;
 }
 
 .totalWrapper { 

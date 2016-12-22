@@ -56,6 +56,10 @@ const Etalase = React.createClass({
                     shownItems = categoryItems.items.slice(0, shown[categoryName] * perRow);
                 }
 
+                const inCat = lodash.reduce(categoryItems.items, (total, item) => {
+                    return total + Math.min(1, (cartCount[item.id] || 0));
+                }, 0);
+
                 const items = lodash.map(shownItems, (item) => {
                     return <EtalaseItem key={item.id} {...item} count={cartCount[item.id] || 0} keyword={etalase.keyword} category={categoryName} />
                 })
@@ -67,7 +71,7 @@ const Etalase = React.createClass({
                             <span className={EtalaseStyle.categoryToggle + " " + (please === 1 && EtalaseStyle.categorySelected)} onClick={this.toggleShown.bind(null, categoryName, 1)}>1 Baris</span>
                             <span className={EtalaseStyle.categoryToggle + " " + (please === -1 && EtalaseStyle.categorySelected)} onClick={this.toggleShown.bind(null, categoryName, -1)}>Semua</span>
                         </span>
-                        <CategoryLabel name={categoryName} />
+                        <CategoryLabel name={categoryName} count={inCat} />
                         {items}
                         <div style={{clear:'both'}} />
                     </div>

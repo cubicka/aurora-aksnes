@@ -38,7 +38,7 @@
 }
 
 .item:hover {
-    box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+    box-shadow: 2px 2px 2px 1px rgba(150, 150, 150, 0.2);
 }
 
 .item .counter {
@@ -93,6 +93,9 @@
 
 .etaWrapper {
     position: relative;
+    border-bottom: solid 1px #979797;
+    margin-bottom: 30px;
+    padding-bottom: 10px;
 }
 
 .pagingWrapper {
@@ -163,6 +166,7 @@
     right: 0;
     margin: 0 auto;
     z-index: 7;
+    font-size: 16px;
 }
 
 .counter .input:hover, .counter .input:focus {

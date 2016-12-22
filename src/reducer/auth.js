@@ -76,6 +76,10 @@ function Reducer(state = initialState, action) {
             return {modal: "register"}
         }
 
+        case "auth/showBeli": {
+            return {modal: "beli"}
+        }
+
         default: return state;
     }
 }

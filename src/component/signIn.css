@@ -16,7 +16,7 @@
   z-index: 10;
 }
 
-.modal {
+.modal, .modal2 {
 	width: 350px;
   border-radius: 8px;
   background-color: #ffffff;
@@ -113,7 +113,7 @@ width: 100%;
     cursor: pointer;
 }
 
-.closeBtn {
+.closeBtn, .closeDev {
   position: absolute;
   top: 24px;
   right: 15px;
@@ -127,4 +127,79 @@ width: 100%;
   top: 35px;
   right: 10px;
   cursor: pointer;
+}
+
+.modal2 {
+  width: 710px;
+  text-align: left;
+  padding: 20px 29px 20px 29px;
+}
+
+.titleDev {
+  text-align: left;
+  font-size: 18px;
+  color: #575757;
+}
+
+.closeDev {
+  right: 25px;
+  top: 20px;
+}
+
+.penerimaWrap {
+  display: inline-block;
+  float: left;
+  width: 48%;
+  margin-top: 18px;
+}
+
+.penerimaWrap.right {
+  float: right;
+  position: relative;
+  left: -5px;
+}
+
+.labelNamaDev {
+  font-size: 14px;
+  color: #575757;
+}
+
+.inputNamaDev, .inputAlamatDev {
+  border: solid 1px #979797;
+  border-radius: 4px;
+  height: 36px;
+  width: 100%;
+  display: inline-block;
+  font-size: 16px;
+  text-indent: 10px;
+}
+
+.alamatWrap {
+  margin-top: 11px;
+}
+
+.inputAlamatDev {
+  height: 72px;
+  padding-left: 10px;
+  padding-top: 10px;
+  width: 98%;
+  text-indent: 0;
+}
+
+.konfirmasiBtn {
+  background-color: #ec722d;
+  border-radius: 4px;
+  display: block;
+  width: 100%;
+  height: 46px;
+  color: #fff;
+  line-height: 46px;
+  text-align: center;
+  font-size: 15px;
+  margin-top: 36px;
+  cursor: pointer;
+}
+
+.konfirmasiBtn:hover {
+  box-shadow: 2px 2px #aaa;
 }

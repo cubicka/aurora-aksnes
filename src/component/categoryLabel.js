@@ -1,10 +1,10 @@
 import React from 'react'
 import EtalaseStyle from './etalase.css'
 
-const CategoryLabel = ({name}) => {
+const CategoryLabel = ({name, count}) => {
     return (
         <div className={EtalaseStyle.categoryLabelWrapper}>
-            <span className={EtalaseStyle.categoryLabel}>{name}</span>
+            <span className={EtalaseStyle.categoryLabel}>{name} { count > 0 ? `(${count} items)` : ""}</span>
             <div style={{clear: 'both'}} />
         </div>
     );

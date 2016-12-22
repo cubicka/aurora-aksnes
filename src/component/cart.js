@@ -76,11 +76,11 @@ const Cart = React.createClass({
         return (
             <div className={style.cartWrapper}>
                 <span className={style.totalWrapper}>
-                    Total <span className={style.totalAmount}>{totalBro}</span>
+                    Total <span className={style.totalAmount}>Rp {totalBro}</span>
                 </span>
                 <span className={style.controlWrapper}>
-                    <img src="undo.png" alt="" className={style.undo} />
-                    <img src="redo.png" alt="" className={style.redo} />
+                    <img src="undo.png" alt="" className={style.undo} onClick={this.props.Undo} />
+                    <img src="redo.png" alt="" className={style.redo} onClick={this.props.Redo} />
                 </span>
                 <span className={style.cartTitle}>My Cart</span>
                 <span className={filteringClass}>
@@ -101,7 +101,7 @@ const Cart = React.createClass({
                 <span className={style.submitWrapper}>
                     <span className={style.submitTotal}>Total</span>
                     <span className={style.submitAmount}>Rp {totalBro}</span>
-                    <span className={style.submitBtn}>Beli</span>
+                    <span className={style.submitBtn} onClick={this.props.ShowBeli}>Beli</span>
                 </span>
             </div>
         );
@@ -124,6 +124,11 @@ const DispatchToProps = (dispatch, ownProps) => {
         Redo: () => {
             dispatch({
                 type: "cart/redo"
+            })
+        },
+        ShowBeli: () => {
+            dispatch({
+                type: "auth/showBeli"
             })
         },
         ShowSignIn: () => {

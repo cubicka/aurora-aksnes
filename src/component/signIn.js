@@ -1,6 +1,7 @@
 import React from 'react'
 import styles from './signIn.css'
 import {connect} from 'react-redux'
+import Delivery from './delivery'
 
 const SignIn = React.createClass({
     render() {
@@ -65,11 +66,18 @@ const Modal = React.createClass({
         return (
             <div className={styles.wrapper}>
                 <div className={styles.backdrop} />
-                <div className={styles.modal}>
+                <div className={modal === "beli" ? styles.modal2 : styles.modal}>
                 {
-                    modal === "signIn" ?
-                    <SignIn {...this.props} /> :
+                    modal === "signIn" &&
+                    <SignIn {...this.props} />
+                }
+                {
+                    modal === "register" &&
                     <Register {...this.props} />
+                }
+                {
+                    modal === "beli" &&
+                    <Delivery {...this.props} />
                 }
                 </div>
             </div>

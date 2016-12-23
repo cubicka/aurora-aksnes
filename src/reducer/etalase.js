@@ -108,7 +108,6 @@ const etalaseUrl = config.backendUrl+"/etalase";
 
 export function ChangeName(itemID, newName, category) {
     return (dispatch) => {
-        console.log('post', itemID, newName, category)
         return fetch(etalaseUrl, {
             method: "POST",
             headers: {
@@ -143,7 +142,6 @@ export function ChangeName(itemID, newName, category) {
                     })
                 }
             }
-            console.log('result', resp);
         })
     }
 }

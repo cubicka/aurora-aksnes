@@ -17,6 +17,11 @@ const Cart = React.createClass({
         })
         this.filterInput.focus();
     },
+    startFiltering() {
+        this.setState({
+            isFiltering: true
+        })
+    },
     closeFiltering() {
         if (this.props.filterKey !== "") {
             this.setState({
@@ -62,7 +67,7 @@ const Cart = React.createClass({
                 </span>
                 <span className={style.cartTitle}>My Cart</span>
                 <span className={filteringClass}>
-                    <input className={style.cartFilter} 
+                    <input className={style.cartFilter} onFocus={this.startFiltering}
                         ref={(input) => { this.filterInput = input; }} onBlur={this.closeFiltering} value={filterKey} onChange={this.changeFilter} />
                     <span className={style.cartFilterIcon} onClick={this.openFiltering} />
                 </span>

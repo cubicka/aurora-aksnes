@@ -3,30 +3,6 @@ import SubHelper from '../helper/sub'
 import {Query} from './etalase'
 
 const initialState = {
-    // cartItem: [0, 1, 2, 3],
-    // items: {
-    //     0: {
-    //         idx: 0,
-    //         quantity: 3,
-    //         keyword: "kecap",
-    //         nama: "kecap",
-    //     },
-    //     1: {
-    //         idx: 1,
-    //         quantity: 7,
-    //         keyword: "garam",
-    //         nama: "garam",
-    //     }, 
-    //     2: {
-    //         idx: 2,
-    //         quantity: 100,
-    //         keyword: "terasi",
-    //         nama: "terasi",
-    //     }, 
-    //     3: {
-    //         idx: 3
-    //     }
-    // },
     cartItem: [0],
     items: {
         0: {
@@ -93,6 +69,46 @@ function AddCartAfter(state, cartID) {
 
 let prevState = localStorage.cart && JSON.parse(localStorage.cart);
 if (prevState) {
+    const validItems = lodash.chain(prevState.items)
+        .filter((item) => {
+            return ('idx' in item) && ('keyword' in item) && ('nama' in item)
+                && item.keyword !== ""
+                && (item.keyword === item.nama || ('realID') in item)
+        })
+        .sortBy((item) => (item.idx))
+        .uniqBy((item) => {
+            if (item.keyword !== item.nama) {
+                return item.realID.toString()
+            }
+
+            return item.keyword;
+        })
+        .map((item, key) => {
+            return lodash.assign({}, item, {idx: key})
+        })
+        .reduce((acc, item) => {
+            return lodash.assign({}, acc, {[item.idx]: item})
+        }, {})
+        .value();
+
+    const validcart = lodash.chain(prevState.cartItem)
+        .filter((id) => (id in validItems))
+        .uniq()
+        .value();
+
+    let newItems = lodash.reduce(validcart, (acc, idx, id) => {
+        return lodash.assign({}, acc, {
+            [id]: lodash.assign({}, validItems[idx], {idx: id})
+        })
+    }, {});
+
+    newItems[validcart.length] = {
+        idx: validcart.length
+    }
+
+    prevState.cartItem = lodash.range(validcart.length + 1);
+    prevState.items = newItems;
+    prevState.lastIdx = validcart.length;
     prevState.prevState = [];
     prevState.nextState = [];
 }
@@ -306,8 +322,7 @@ export default (state = prevState || initialState, action) => {
             newSort[action.sortID] = !(newSort[action.sortID]);
             const syalala = lodash.assign({}, state, {
                 cartItem: [...cart2, state.cartItem[state.cartItem.length-1]],
-                sortOrder: newSort,
-                filterKey: ""
+                sortOrder: newSort
             })
 
             return SaveToComp(syalala);
@@ -545,7 +560,7 @@ export function FilterCart(txt) {
             return items[id] && items[id].nama && items[id].nama.toLowerCase().indexOf(txt) > -1;
         })
 
-        const newCart = lodash.reduce([true, false], (acc, val) => {
+        const newCart = lodash.reduce([true, false, undefined], (acc, val) => {
             if (val in filteredItems) {
                 return [...acc, ...filteredItems[val]]
             }
@@ -582,17 +597,19 @@ function Cart(state) {
     const {display} = etalase;
 
     return {
-        items: lodash.map(cartItem, (id) => {
+        items: lodash.reduce(cartItem, (acc, id) => {
             const found = lodash.find(display, (idx) => {
                 return idx === items[id].realID;
             })
 
-            return lodash.assign({}, items[id], {
-                price: items[id].realID ? itemColls[items[id].realID].harga : 0,
-                inDisplay: items[id].realID && found
-            })
-        }),
-        idx, filterKey,
+            return lodash.assign({}, acc, {
+                [id]: lodash.assign({}, items[id], {
+                    price: items[id].realID ? itemColls[items[id].realID].harga : 0,
+                    inDisplay: items[id].realID && found
+                })
+            })  
+        }, {}),
+        idx, filterKey, cartItem,
     }
 }
 

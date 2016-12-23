@@ -91,6 +91,15 @@ const CartRow = React.createClass({
             }
         }
     },
+    shouldDelete() {
+        const {nama} = this.props;
+        if (!nama || nama === "") {
+            this.props.TryDelete();
+        }
+    },
+    doDelete() {
+        this.props.TryDelete();
+    },
     render() {
         const {nama, quantity, price, inDisplay, placehold} = this.props;
 
@@ -103,6 +112,7 @@ const CartRow = React.createClass({
                       onKeyDown={this.moveInGeneral} 
                       onChange={this.changeKeyword}
                       onFocus={this.toGeneral} value={nama || ""}
+                      onBlur={this.shouldDelete}
                       placeholder={placehold ? "Bisa ketik di sini" : ""} />
                 </td>
                 <td className={style.quantityCol}>
@@ -122,7 +132,7 @@ const CartRow = React.createClass({
                       disabled={true} />
                 </td>
                 <td className={style.delColumn}>
-                    X
+                    <span onClick={this.doDelete}>{ placehold ? "" : "X"}</span>
                 </td>
             </tr>
         );
@@ -133,6 +143,12 @@ function DispatchToProps(dispatch, ownProps) {
     const rowIdx = ownProps.idx;
 
     return {
+        TryDelete: () => {
+            dispatch({
+                type: "cart/delete",
+                idx: rowIdx
+            })
+        },
         UpdateKeyword: (idx, keyword) => {
             dispatch(UpdateKeyword(idx, keyword));
         },

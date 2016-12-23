@@ -46,6 +46,9 @@ td input.right {
     width: 30px;
     text-align: center;
     color: #c33;
+}
+
+.delColumn span {
     cursor: pointer;
 }
 

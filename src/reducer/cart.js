@@ -58,12 +58,9 @@ function SortCart(cart, {sortID, itemColls}) {
                 return it.idx === item.idx;
             });
 
-            console.log('id', parseInt(hm.price, 10), item.idx, hm);
             return (hm && (parseInt(hm.price, 10) * hm.quantity)) || 0;
         }
     })
-
-    console.log('ccc', cart, sortID, itemColls);
 
     if (sortOrder[sortID]) {
         return lodash.reverse(sortedItems);
@@ -233,6 +230,23 @@ export default (state = prevState || initialState, action) => {
             } else {
                 return OneWay(state, syalala);
             }
+        }
+
+        case "cart/delete": {
+            const idx = lodash.findIndex(state.cartItem, (x) => (x === action.idx));
+            if (idx === state.cartItem.length - 1) {
+                return state;
+            }
+
+
+            const syalala = lodash.assign({}, state, {
+                cartItem: [
+                    ...state.cartItem.slice(0, idx),
+                    ...state.cartItem.slice(idx + 1, state.cartItem.length)
+                ]
+            });
+
+            return OneWay(state, syalala);
         }
 
         case "cart/move": {
@@ -513,7 +527,6 @@ function Cart(state) {
     const {cart, item: itemColls, etalase} = state;
     const {items, idx, cartItem} = cart;
     const {display} = etalase;
-
 
     return {
         items: lodash.map(cartItem, (id) => {

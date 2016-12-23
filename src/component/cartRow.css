@@ -1,6 +1,6 @@
 .quantity, .general, .price {
     display: inline-block;
-    font-size: 16px;
+    font-size: 14px;
 }
 
 .highlight {
@@ -24,6 +24,7 @@ td input {
     box-sizing: border-box;
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
+    padding: 9px 7px;
 }
 
 td input.right {
@@ -31,14 +32,14 @@ td input.right {
 }
 
 .green input {
-    border: solid 1px #3c3;
+    border: solid 1px #cccccc;
     border-right: none;
-    background-color: #cc3;
+    background-color: #f9ead0;
     color: #333;
 }
 
 .green input.right {
-    border-right: solid 1px #3c3;
+    border-right: solid 1px #f9ead0;
 }
 
 .delColumn {

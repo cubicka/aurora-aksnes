@@ -76,7 +76,7 @@ const Cart = React.createClass({
         return (
             <div className={style.cartWrapper}>
                 <span className={style.totalWrapper}>
-                    Total <span className={style.totalAmount}>Rp {totalBro}</span>
+                    Total  <span className={style.totalAmount}>Rp {totalBro}</span>
                 </span>
                 <span className={style.controlWrapper}>
                     <img src="undo.png" alt="" className={style.undo} onClick={this.props.Undo} />

@@ -137,14 +137,21 @@ width: 100%;
 }
 
 .titleDev {
-  text-align: left;
+  display: block;
   font-size: 18px;
-  color: #575757;
+  font-weight: 600;
+  
+  font-style: normal;
+  font-stretch: normal;
+  color: #187be7;
+  margin-top: 6px;
+  margin-bottom: 17px;
 }
 
 .closeDev {
-  right: 25px;
-  top: 20px;
+  right: 28px;
+  top: 25px;
+
 }
 
 .penerimaWrap {

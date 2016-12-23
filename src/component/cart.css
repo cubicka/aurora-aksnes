@@ -192,7 +192,10 @@
 
 .totalAmount {
     font-size: 18px;
-    color: #333;
+    color: #575757;
+    font-weight: 600;
+    padding-left: 5px;
+
 }
 
 .submitWrapper {
@@ -207,13 +210,15 @@
     font-size: 16px;
     color: #333;
     margin-top: 10px;
+    color: #575757;
 }
 
 .submitAmount {
     display: block;
-    font-size: 22px;
+    font-size: 21px;
     color: #333;
     font-weight: 600;
+    color: #575757;
 }
 
 .submitBtn {

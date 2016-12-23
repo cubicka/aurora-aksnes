@@ -568,9 +568,12 @@ export function FilterCart(txt) {
             return acc;
         }, [])
 
-        const eta = lodash.map(filteredItems[true] || [], (id) => {
-            return items[id].realID
-        })
+        const eta = lodash.chain(filteredItems[true] || [])
+            .filter((id) => (items[id].realID))
+            .map((id) => {
+                return items[id].realID
+            })
+            .value();
 
         dispatch({
             type: "cart/filter",
@@ -597,19 +600,17 @@ function Cart(state) {
     const {display} = etalase;
 
     return {
-        items: lodash.reduce(cartItem, (acc, id) => {
+        items: lodash.map(cartItem, (id) => {
             const found = lodash.find(display, (idx) => {
                 return idx === items[id].realID;
             })
 
-            return lodash.assign({}, acc, {
-                [id]: lodash.assign({}, items[id], {
-                    price: items[id].realID ? itemColls[items[id].realID].harga : 0,
-                    inDisplay: items[id].realID && found
-                })
+            return lodash.assign({}, items[id], {
+                price: items[id].realID ? itemColls[items[id].realID].harga : 0,
+                inDisplay: items[id].realID && found
             })  
-        }, {}),
-        idx, filterKey, cartItem,
+        }),
+        idx, filterKey,
     }
 }
 

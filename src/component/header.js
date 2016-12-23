@@ -33,10 +33,10 @@ const Header = React.createClass({
 
 function StateToProps(state) {
     const cart = CartSub('cart/cart', state)
-    const lastCart = cart.cartItem && cart.cartItem.length > 1 ? cart.items[cart.cartItem[cart.cartItem.length - 2]] : {};
+    const lastCart = cart.items.length > 1 ? cart.items[cart.items.length - 2] : {};
     const query = lastCart.keyword === lastCart.nama && lastCart.nama ? lastCart.nama : "";
 
-    console.log('lc', cart, lastCart, query);
+    console.log('qqq', cart, lastCart, query)
 
     return {
         cart: cart,

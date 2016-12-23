@@ -87,21 +87,6 @@ const Etalase = React.createClass({
             );
         }
 
-        // const categoryItems = lodash.map(etalase, (categoryItems) => {
-        //     const categoryName = categoryItems.category.name;
-        //     const items = lodash.map(categoryItems.items, (item) => {
-        //         return <EtalaseItem key={item.id} {...item} />
-        //     })
-
-        //     return (
-        //         <div key={categoryName}>
-        //             <CategoryLabel name={categoryName} />
-        //             {items}
-        //             <div style={{clear:'both'}} />
-        //         </div>
-        //     );
-        // })
-
         return (
             <div className={EtalaseStyle.etalase}>
                 <h3>TODO: First time etalase</h3>

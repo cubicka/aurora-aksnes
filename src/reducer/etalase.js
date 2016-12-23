@@ -17,6 +17,12 @@ function ResortDisplay(display, countState) {
 }
 
 export default (state = initialState, action) => {
+    if (action.type === "etalase/customOrder") {
+        return lodash.assign({}, state, {
+            display: action.display
+        })
+    }
+
     if (action.type === "etalase/update") {
         return lodash.assign({}, state, {
             display: ResortDisplay(action.display, action.countState),

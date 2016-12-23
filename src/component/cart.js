@@ -1,30 +1,9 @@
 import lodash from 'lodash'
 import React from 'react'
 import {connect} from 'react-redux'
-import {Sub as CartSub} from '../reducer/cart'
-// import Counter from './counter'
+import {Sub as CartSub, FilterCart} from '../reducer/cart'
 import style from './cart.css'
 import CartRow from './cartRow'
-
-// const CartItem = React.createClass({
-//     render() {
-//         const {id, nama, harga, ukuran, image, jumlah} = this.props;
-
-//         return (
-//             <div className={style.cartItem}>
-//                 <img src={image} alt={nama} className={style.img} />
-//                 <span className={style.counter}>
-//                     <Counter id={id} />
-//                     <div className={style.totalHarga}>Rp {harga * jumlah}</div>
-//                 </span>
-//                 <div>{nama}</div>
-//                 <span>Rp {harga} / </span>
-//                 <span>{ukuran}</span>
-//                 <div style={{clear: 'both'}} />
-//             </div>
-//         );
-//     }
-// })
 
 const Cart = React.createClass({
     getInitialState() {
@@ -39,8 +18,16 @@ const Cart = React.createClass({
         this.filterInput.focus();
     },
     closeFiltering() {
+        if (this.props.filterKey !== "") {
+            this.setState({
+                isFiltering: false
+            })
+        }
+    },
+    changeFilter(e) {
+        this.props.ChangeFilter(e.target.value);
         this.setState({
-            isFiltering: false
+            isFiltering: true
         })
     },
     hehe() {
@@ -48,16 +35,7 @@ const Cart = React.createClass({
     },
     render() {
         const {cart} = this.props;
-        // const items = lodash.chain(cart)
-        // .filter((item) => {
-        //     return item.count > 0;
-        // })
-        // .map((item) => {
-        //     return (
-        //         <CartItem key={item.id} {...item.item} jumlah={item.count} />
-        //     );
-        // })
-        // .value()
+        const {filterKey} = cart;
 
         const items = lodash.map(cart.items, (item, urutan) => {
             return <CartRow key={item.idx} activeIdx={cart.idx} {...item} placehold={urutan === cart.items.length-1} />
@@ -71,7 +49,7 @@ const Cart = React.createClass({
             return acc + (parseInt(item.price, 10) * item.quantity);
         }, 0);
 
-        const filteringClass = this.state.isFiltering ? (style.filterWrapper + " " + style.isFiltering) : style.filterWrapper;
+        const filteringClass = this.state.isFiltering || (filterKey !== "") ? (style.filterWrapper + " " + style.isFiltering) : style.filterWrapper;
 
         return (
             <div className={style.cartWrapper}>
@@ -85,7 +63,7 @@ const Cart = React.createClass({
                 <span className={style.cartTitle}>My Cart</span>
                 <span className={filteringClass}>
                     <input className={style.cartFilter} 
-                        ref={(input) => { this.filterInput = input; }} onBlur={this.closeFiltering} />
+                        ref={(input) => { this.filterInput = input; }} onBlur={this.closeFiltering} value={filterKey} onChange={this.changeFilter} />
                     <span className={style.cartFilterIcon} onClick={this.openFiltering} />
                 </span>
                 <span className={style.headerWrapper}>
@@ -154,6 +132,9 @@ const DispatchToProps = (dispatch, ownProps) => {
                 sortID: 2,
                 itemColls: hahaha
             })
+        },
+        ChangeFilter: (txt) => {
+            dispatch(FilterCart(txt));
         }
     }
 }

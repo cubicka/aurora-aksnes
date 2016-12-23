@@ -94,8 +94,10 @@ function AddCartAfter(state, cartID) {
 }
 
 let prevState = localStorage.cart && JSON.parse(localStorage.cart);
-prevState.prevState = [];
-prevState.nextState = [];
+if (prevState) {
+    prevState.prevState = [];
+    prevState.nextState = [];
+}
 
 function SaveToComp(state) {
     localStorage.cart = JSON.stringify(state);

@@ -26,7 +26,7 @@
 }
 
 .item {
-    border: solid 1px #e2e2e2;
+    border: solid 2px #e2e2e2;
     float: left;
     font-size: 14px;
     color: #575757;
@@ -61,7 +61,7 @@
 }
 
 .selected {
-    border: solid 3px #75c890;
+    border: solid 2px #75c890;
 }
 
 .item .harga {
@@ -97,7 +97,7 @@
     position: relative;
     border-bottom: solid 1px #979797;
     margin-bottom: 30px;
-    padding-bottom: 10px;
+    padding-bottom: 0px;
 }
 
 .pagingWrapper {

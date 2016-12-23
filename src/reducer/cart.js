@@ -38,7 +38,8 @@ const initialState = {
     lastIdx: 0,
     sortOrder: [false, false, false],
     prevState: [],
-    nextState: []
+    nextState: [],
+    filterKey: ""
 };
 
 function SortCart(cart, {sortID, itemColls}) {
@@ -161,6 +162,22 @@ export default (state = prevState || initialState, action) => {
 
         case "cart/redo": {
             return Redo(state);
+        }
+
+        case "cart/reorder": {
+            const syalala = lodash.assign({}, state, {
+                cartItem: action.order
+            })
+
+            return SaveToComp(syalala);
+        }
+
+        case "cart/filter": {
+            const syalala = lodash.assign({}, state, {
+                filterKey: action.filterKey
+            })
+
+            return SaveToComp(syalala);
         }
 
         case "cart/update": {
@@ -289,7 +306,8 @@ export default (state = prevState || initialState, action) => {
             newSort[action.sortID] = !(newSort[action.sortID]);
             const syalala = lodash.assign({}, state, {
                 cartItem: [...cart2, state.cartItem[state.cartItem.length-1]],
-                sortOrder: newSort
+                sortOrder: newSort,
+                filterKey: ""
             })
 
             return SaveToComp(syalala);
@@ -519,13 +537,48 @@ function Dec(state, {itemID, keyword, item}) {
     return state;
 }
 
-// function Dec(state, {id}) {
-//     return Update(state, id, (x) => (Math.max(0, (x - 1))))
-// }
+export function FilterCart(txt) {
+    return (dispatch, getState) => {
+        const {cart} = getState();
+        const {cartItem, items} = cart;
+        const filteredItems = lodash.groupBy(cartItem, (id) => {
+            return items[id] && items[id].nama && items[id].nama.toLowerCase().indexOf(txt) > -1;
+        })
+
+        const newCart = lodash.reduce([true, false], (acc, val) => {
+            if (val in filteredItems) {
+                return [...acc, ...filteredItems[val]]
+            }
+
+            return acc;
+        }, [])
+
+        const eta = lodash.map(filteredItems[true] || [], (id) => {
+            return items[id].realID
+        })
+
+        dispatch({
+            type: "cart/filter",
+            filterKey: txt
+        })
+
+        dispatch({
+            type: "cart/reorder",
+            order: newCart
+        })
+
+        if (txt !== "") {
+            dispatch({
+                type: "etalase/customOrder",
+                display: eta
+            })
+        }
+    }
+}
 
 function Cart(state) {
     const {cart, item: itemColls, etalase} = state;
-    const {items, idx, cartItem} = cart;
+    const {items, idx, cartItem, filterKey} = cart;
     const {display} = etalase;
 
     return {
@@ -539,7 +592,7 @@ function Cart(state) {
                 inDisplay: items[id].realID && found
             })
         }),
-        idx
+        idx, filterKey,
     }
 }
 

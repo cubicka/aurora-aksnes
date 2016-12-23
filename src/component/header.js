@@ -17,7 +17,7 @@ const Header = React.createClass({
         }
     },
     render() {
-        const {cart, lastCart, query} = this.props;
+        const {query} = this.props;
 
         return (
             <div className={style.header}>

@@ -49,7 +49,6 @@ export function SignIn(username, password) {
         return {};
     })
     .then(function (resp) {
-        console.log('rr', resp);
         if (!resp || !resp.data || !resp.data.message || resp.data.message !== 'success') {
             alert('Sign In failed.');
         } else {

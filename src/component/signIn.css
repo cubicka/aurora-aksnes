@@ -43,7 +43,8 @@
 .title {
 	display: block;
   font-size: 18px;
-  font-weight: normal;
+  font-weight: 600;
+  
   font-style: normal;
   font-stretch: normal;
   color: #187be7;
@@ -60,7 +61,7 @@
 	cursor: pointer;
   height: 46px;
   border-radius: 4px;
-  background-color: #187be7;
+  background-color: #ec722d;
   font-size: 14px;
   font-weight: normal;
   font-style: normal;

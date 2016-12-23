@@ -24,7 +24,7 @@
     "deploy" : {
         "live" : {
             "user" : "ubuntu",
-            "host" : "ubuntu-aws",
+            "host" : "ec2-35-163-116-219.us-west-2.compute.amazonaws.com",
             "ref" : "origin/master",
             "repo": "git@github.com:cubicka/aurora-aksnes.git",
             "path" : "/home/ubuntu/frontend",

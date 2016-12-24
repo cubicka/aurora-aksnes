@@ -3,6 +3,7 @@ import {connect} from 'react-redux'
 import style from './etalase.css'
 import {ChangeName} from '../reducer/etalase'
 import {UpdateQuantityByID} from '../reducer/cart'
+import {FormatHarga} from '../helper/format'
 
 const EtalaseItem = React.createClass({
     getInitialState() {
@@ -67,7 +68,7 @@ const EtalaseItem = React.createClass({
                         <span className={style.itemName} onClick={this.toEditMode}>{nama}</span>
                     }
                     </div>
-                <span className={style.harga} onClick={this.toEditMode}><strong>Rp {harga || "???"}</strong> / {ukuran}</span>
+                <span className={style.harga} onClick={this.toEditMode}><strong>Rp {FormatHarga(harga)}</strong> / {ukuran}</span>
                 <div className={style.counter}>
                     <div className={style.minus} onClick={this.dec}>-</div>
                     <div className={style.plus} onClick={this.inc}>+</div>

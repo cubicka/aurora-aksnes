@@ -2,6 +2,7 @@ import React from 'react'
 import style from './cartRow.css'
 import {connect} from 'react-redux'
 import {Move, MoveUp, MoveDown, UpdateKeyword, UpdateQuantity} from '../reducer/cart'
+import {FormatHarga} from '../helper/format'
 
 function doGetCaretPosition (oField) {
 
@@ -127,7 +128,7 @@ const CartRow = React.createClass({
                     <input className={style.price + ' ' + style.right} 
                       type="text"
                       ref={(input) => { this.price = input; }}
-                      value={ nama ? ((quantity || 0) * price).format() : "" }
+                      value={ nama ? FormatHarga((quantity || 0) * price) : "" }
                       onChange={null}
                       disabled={true} />
                 </td>

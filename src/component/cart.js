@@ -2,6 +2,7 @@ import lodash from 'lodash'
 import React from 'react'
 import {connect} from 'react-redux'
 import {Sub as CartSub, FilterCart} from '../reducer/cart'
+import {FormatHarga} from '../helper/format'
 import style from './cart.css'
 import CartRow from './cartRow'
 
@@ -59,7 +60,7 @@ const Cart = React.createClass({
         return (
             <div className={style.cartWrapper}>
                 <span className={style.totalWrapper}>
-                    Total  <span className={style.totalAmount}>Rp {totalBro.format()}</span>
+                    Total  <span className={style.totalAmount}>Rp {FormatHarga(totalBro)}</span>
                 </span>
                 <span className={style.controlWrapper}>
                     <img src="undo.png" alt="" className={style.undo} onClick={this.props.Undo} />
@@ -73,7 +74,7 @@ const Cart = React.createClass({
                             ref={(input) => { this.filterInput = input; }} onBlur={this.closeFiltering} value={filterKey} onChange={this.changeFilter} placeholder={this.state.isFiltering ? "Sortir by nama" : ""} />
                         <span className={style.cartFilterIcon} onClick={this.openFiltering} />
                     </span>
-                }   
+                }
                 <span className={style.headerWrapper}>
                     <span className={style.headerNama} onClick={this.props.SortByNama}>Nama</span>
                     <span className={style.headerJumlah} onClick={this.props.SortByJumlah}>Jumlah</span>
@@ -86,7 +87,7 @@ const Cart = React.createClass({
                 </table>
                 <span className={style.submitWrapper}>
                     <span className={style.submitTotal}>Total</span>
-                    <span className={style.submitAmount}>Rp {totalBro.format()}</span>
+                    <span className={style.submitAmount}>Rp {FormatHarga(totalBro)}</span>
                     <span className={style.submitBtn} onClick={this.props.ShowBeli}>Beli</span>
                 </span>
             </div>

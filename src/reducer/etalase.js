@@ -181,14 +181,14 @@ export function Query(keyword) {
 
         if (keyword in etalase.libs) {
             dispatch({
-                type: "etalase/stopLoading"
-            })
-
-            dispatch({
                 type: "etalase/showKey",
                 keyword: keyword,
                 countState: countState
             });
+
+            dispatch({
+                type: "etalase/stopLoading"
+            })
 
             return Promise.resolve();
         }

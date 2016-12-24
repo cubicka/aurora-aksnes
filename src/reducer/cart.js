@@ -610,24 +610,58 @@ export function FilterCart(txt) {
     return (dispatch, getState) => {
         const {cart} = getState();
         const {cartItem, items} = cart;
-        const filteredItems = lodash.groupBy(cartItem, (id) => {
-            return items[id] && items[id].nama && items[id].nama.toLowerCase().indexOf(txt) > -1;
-        })
+        const qs = txt.split(' ').map((s) => (s.toLowerCase()));
 
-        const newCart = lodash.reduce([true, false, undefined], (acc, val) => {
-            if (val in filteredItems) {
-                return [...acc, ...filteredItems[val]]
+        const newCart = lodash.sortBy(cartItem, (id) => {
+            if (!items[id] || !items[id].nama) {
+                return 0;
             }
 
-            return acc;
-        }, [])
+            if (items[id].keyword === "") {
+                return 1;
+            }
 
-        const eta = lodash.chain(filteredItems[true] || [])
-            .filter((id) => (items[id].realID))
-            .map((id) => {
-                return items[id].realID
+            const lc = items[id].nama.toLowerCase();
+            const matched = lodash.filter(qs, (q) => {
+                return lc.indexOf(q) > -1;
             })
-            .value();
+
+            return -1 * matched.length
+        })
+
+        const eta = lodash.chain(newCart)
+            .filter((id) => {
+                return items[id] && items[id].keyword !== items[id].nama && items[id].realID
+            })
+            .map((id) => {
+                return items[id].realID;
+            })
+            .value()
+
+        // const newCart = lodash.map(scoredItems, (id) => {
+        //     return items[id]
+        // })
+
+        // const filteredItems = lodash.groupBy(cartItem, (id) => {
+        //     return items[id] && items[id].nama && items[id].nama.toLowerCase().indexOf(txt) > -1;
+        // })
+
+        // const newCart = lodash.reduce([true, false, undefined], (acc, val) => {
+        //     if (val in filteredItems) {
+        //         return [...acc, ...filteredItems[val]]
+        //     }
+
+        //     return acc;
+        // }, [])
+
+        // const eta = lodash.chain(filteredItems[true] || [])
+        //     .filter((id) => (items[id].realID))
+        //     .map((id) => {
+        //         return items[id].realID
+        //     })
+        //     .value();
+
+        console.log('eta', eta, newCart, items)
 
         dispatch({
             type: "cart/filter",

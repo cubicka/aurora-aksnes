@@ -91,8 +91,6 @@ function Etalase(state) {
         return item.category;
     })
 
-    console.log('cats', categories)
-
     return {
         isDisplay: true,
         onDisplay: display,
@@ -144,6 +142,16 @@ export function ChangeName(itemID, newName, category) {
                     })
                 }
             }
+        })
+    }
+}
+
+export function Emphasis(realID) {
+    return (dispatch, getState) => {
+        const {etalase} = getState();
+        dispatch({
+            type: "etalase/customOrder",
+            display: lodash.uniq([realID, ...etalase.display])
         })
     }
 }

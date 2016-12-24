@@ -36,8 +36,6 @@ function StateToProps(state) {
     const lastCart = cart.items.length > 1 ? cart.items[cart.items.length - 2] : {};
     const query = lastCart.keyword === lastCart.nama && lastCart.nama ? lastCart.nama : "";
 
-    console.log('again', cart, lastCart, query)
-
     return {
         cart: cart,
         lastCart, query,

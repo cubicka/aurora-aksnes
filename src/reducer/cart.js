@@ -1,6 +1,6 @@
 import lodash from 'lodash'
 import SubHelper from '../helper/sub'
-import {Query} from './etalase'
+import {Query, Emphasis} from './etalase'
 
 const initialState = {
     cartItem: [0],
@@ -345,6 +345,9 @@ export function Move(row, col) {
 
             const newTimeout = setTimeout(() => {
                 dispatch(Query(item.keyword))
+                if (item.keyword !== item.nama && item.realID) {
+                    dispatch(Emphasis(item.realID))
+                }
             }, 500);
 
             dispatch({
@@ -358,6 +361,10 @@ export function Move(row, col) {
             type: "cart/move",
             idx: [row, col]
         })
+
+        if (item.keyword !== item.nama && item.realID) {
+            dispatch(Emphasis(item.realID))
+        }
 
         const {idx, lastIdx} = cart;
         if (row !== idx[0] && row !== lastIdx && item.keyword !== etalase.currentKeyword) {

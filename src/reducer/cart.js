@@ -427,6 +427,33 @@ export function UpdateQuantity(id, newQuantity) {
     }
 }
 
+export function UpdateQuantityByID(id, newQuantity, item) {
+    return (dispatch, getState) => {
+        const {cart} = getState();
+        const {items, cartItem} = cart;
+
+        const matchItem = lodash.find(cartItem, (idx) => {
+            const val = items[idx];
+
+            if (val.keyword === item.keyword && val.nama === item.keyword) {
+                return true;
+            }
+
+            if (val.keyword !== val.nama && val.realID === id) {
+                return true;
+            }
+
+            return false;
+        })
+
+        dispatch({
+            type: "cart/updateQuantity",
+            id: items[matchItem].idx,
+            quantity: newQuantity
+        });
+    }
+}
+
 export function UpdateKeyword(id, newKeyword) {
     return (dispatch, getState) => {
         const {cart} = getState();

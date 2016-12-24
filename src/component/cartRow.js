@@ -34,10 +34,9 @@ function doGetCaretPosition (oField) {
 
 const CartRow = React.createClass({
     moveInQuantity(e) {
-        const s = e.target.value;
         const pos = doGetCaretPosition(this.quantity);
 
-        if (s.length === pos && e.keyCode === 39) {
+        if (0 === pos && e.keyCode === 37) {
             this.props.MoveRight();
         } else if (e.keyCode === 38) {
             this.props.MoveUp();
@@ -66,9 +65,10 @@ const CartRow = React.createClass({
         this.props.UpdateQuantity(idx, s)
     },
     moveInGeneral(e) {
+        const s = e.target.value;
         const pos = doGetCaretPosition(this.general);
 
-        if (0 === pos && e.keyCode === 37) {
+        if (s.length === pos && e.keyCode === 39) {
             this.props.MoveLeft();
         } else if (e.keyCode === 38) {
             this.props.MoveUp();

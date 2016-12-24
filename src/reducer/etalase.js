@@ -47,9 +47,13 @@ export default (state = initialState, action) => {
     }
 
     if (action.type === "etalase/stopLoading") {
-        return lodash.assign({}, state, {
-            loading: false
-        });
+        // if (state.loading === action.loadID) {
+            return lodash.assign({}, state, {
+                loading: false
+            });
+        // }
+
+        // return state;
     }
 
     if (action.type === "items/delete") {

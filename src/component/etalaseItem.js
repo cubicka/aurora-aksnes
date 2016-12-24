@@ -2,6 +2,7 @@ import React from 'react'
 import {connect} from 'react-redux'
 import style from './etalase.css'
 import {ChangeName} from '../reducer/etalase'
+import {UpdateQuantityByID} from '../reducer/cart'
 
 const EtalaseItem = React.createClass({
     getInitialState() {
@@ -48,8 +49,9 @@ const EtalaseItem = React.createClass({
     dec() {
         this.props.Dec();
     },
-    onChange() {
-
+    onChange(e) {
+        const q = parseInt(e.target.value, 10);
+        this.props.UpdateQuantity(q || 0);
     },
     render() {
         const {nama, harga, ukuran, image, count} = this.props;
@@ -103,6 +105,21 @@ function DispatchToProps(dispatch, ownProps) {
         },
         ChangeName: (itemID, newName, category) => {
             dispatch(ChangeName(itemID, newName, category));
+        },
+        UpdateQuantity: (quantity) => {
+            dispatch({
+                type: "cart/inc",
+                itemID: ownProps.id,
+                keyword: ownProps.keyword,
+                item: ownProps
+            })
+            dispatch(UpdateQuantityByID(ownProps.id, quantity+1, ownProps))
+            dispatch({
+                type: "cart/dec",
+                itemID: ownProps.id,
+                keyword: ownProps.keyword,
+                item: ownProps
+            })
         }
     }
 }

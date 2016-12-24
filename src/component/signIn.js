@@ -24,7 +24,13 @@ const SignInX = React.createClass({
     },
     signIn() {
         const {username, password} = this.state;
-        this.props.SignIn(username, password);
+        if (username && password) {
+            this.props.SignIn(username, password);
+        } else if (!username) {
+            alert('Username nggak boleh kosong');
+        } else if (!password) {
+            alert('Password nggak boleh kosong');
+        }
     },
     render() {
         const {username, password} = this.state;
@@ -66,7 +72,17 @@ const RegisterX = React.createClass({
     },
     register() {
         const {username, password, email, phone} = this.state;
-        this.props.Register(username, password, email, phone)
+        if (username && password && email && phone) {
+            this.props.Register(username, password, email, phone);
+        } else if (!username) {
+            alert('Username nggak boleh kosong');
+        } else if (!email) {
+            alert('Email nggak boleh kosong');
+        } else if (!phone) {
+            alert('Phone nggak boleh kosong');
+        } else if (!password) {
+            alert('Password nggak boleh kosong');
+        }
     },
     checkEnter(e) {
         if (e.keyCode === 13) {

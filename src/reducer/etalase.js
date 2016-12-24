@@ -3,6 +3,7 @@ import SubHelper from '../helper/sub'
 import fetch from 'isomorphic-fetch'
 import {Sub as CartSub} from '../reducer/cart'
 import config from '../config.json'
+import Promise from 'promise'
 
 const initialState = {
     display: [],
@@ -157,6 +158,10 @@ export function Emphasis(realID) {
             type: "etalase/customOrder",
             display: lodash.uniq([realID, ...etalase.display])
         })
+
+        dispatch({
+            type: "etalase/stopLoading"
+        })
     }
 }
 
@@ -185,7 +190,7 @@ export function Query(keyword) {
                 countState: countState
             });
 
-            return;
+            return Promise.resolve();
         }
 
         return fetch(etalaseUrl + "?item=" + keyword, {

@@ -1,6 +1,7 @@
 import lodash from 'lodash'
 import SubHelper from '../helper/sub'
 import {Query, Emphasis} from './etalase'
+import Promise from 'promise'
 
 const initialState = {
     cartItem: [0],
@@ -10,7 +11,7 @@ const initialState = {
         }
     },
     timeout: {},
-    idx: [0, 0],
+    idx: [-1, 0],
     lastIdx: 0,
     sortOrder: [false, false, false],
     prevState: [],
@@ -111,6 +112,8 @@ if (prevState) {
     prevState.lastIdx = validcart.length;
     prevState.prevState = [];
     prevState.nextState = [];
+    prevState.idx = [-1,0];
+    prevState.filterKey = "";
 }
 
 function SaveToComp(state) {
@@ -190,7 +193,8 @@ export default (state = prevState || initialState, action) => {
 
         case "cart/filter": {
             const syalala = lodash.assign({}, state, {
-                filterKey: action.filterKey
+                filterKey: action.filterKey,
+                idx: [-1, 0]
             })
 
             return SaveToComp(syalala);
@@ -336,21 +340,40 @@ export default (state = prevState || initialState, action) => {
 export function Move(row, col) {
     return (dispatch, getState) => {
         const {cart, etalase} = getState();
+        const {idx} = cart;
+
+        dispatch({
+            type: "cart/move",
+            idx: [row, col]
+        })
+
+        if (idx[0] === row) {
+            return;
+        }
 
         const item = cart.items[row];
-        if (item && item.keyword && (item.keyword !== etalase.currentKeyword || etalase.loading)) {
+        // if (item && item.keyword && (item.keyword !== etalase.currentKeyword || etalase.loading)) {
             const {timeout} = cart;
             if (timeout["query"]) {
                 clearTimeout(timeout["query"]);
             }
 
             const newTimeout = setTimeout(() => {
-                if (etalase.display.indexOf(item.realID) < 0) {
-                    dispatch(Query(item.keyword))
-                }
-                if (item.keyword !== item.nama && item.realID) {
-                    dispatch(Emphasis(item.realID))
-                }
+                return new Promise(function (resolve, reject) {
+                    if ((etalase.display.indexOf(item.realID) < 0) ||(item.keyword !== item.nama && item.realID)) {
+                        dispatch(Query(item.keyword))
+                        .then(function () {
+                            resolve();
+                        })
+                    } else {
+                        resolve();
+                    }
+                })
+                .then(function () {
+                    if (item.keyword !== item.nama && item.realID) {
+                        dispatch(Emphasis(item.realID))
+                    }
+                })
             }, 500);
 
             dispatch({
@@ -358,24 +381,18 @@ export function Move(row, col) {
                 id: "query",
                 timeout: newTimeout
             })
-        }
+        // }
 
-        dispatch({
-            type: "cart/move",
-            idx: [row, col]
-        })
-
-        if (item.keyword !== item.nama && item.realID) {
+        if (item.keyword !== item.nama && item.realID && !etalase.loading) {
             dispatch(Emphasis(item.realID))
         }
 
-        const {idx, lastIdx} = cart;
-        if (row !== idx[0] && row !== lastIdx && item.keyword !== etalase.currentKeyword && etalase.display.indexOf(item.realID) < 0) {
+        // if (row !== idx[0] && row !== lastIdx && item.keyword !== etalase.currentKeyword && etalase.display.indexOf(item.realID) < 0) {
             dispatch({
                 type: "etalase/startLoading",
                 idx: [row, col]
             })
-        }
+        // }
     }
 }
 

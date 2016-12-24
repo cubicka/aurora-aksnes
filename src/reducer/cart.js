@@ -322,7 +322,8 @@ export default (state = prevState || initialState, action) => {
             newSort[action.sortID] = !(newSort[action.sortID]);
             const syalala = lodash.assign({}, state, {
                 cartItem: [...cart2, state.cartItem[state.cartItem.length-1]],
-                sortOrder: newSort
+                sortOrder: newSort,
+                filterKey: ""
             })
 
             return SaveToComp(syalala);

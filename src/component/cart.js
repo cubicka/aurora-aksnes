@@ -59,18 +59,21 @@ const Cart = React.createClass({
         return (
             <div className={style.cartWrapper}>
                 <span className={style.totalWrapper}>
-                    Total  <span className={style.totalAmount}>Rp {totalBro}</span>
+                    Total  <span className={style.totalAmount}>Rp {totalBro.format()}</span>
                 </span>
                 <span className={style.controlWrapper}>
                     <img src="undo.png" alt="" className={style.undo} onClick={this.props.Undo} />
                     <img src="redo.png" alt="" className={style.redo} onClick={this.props.Redo} />
                 </span>
                 <span className={style.cartTitle}>My Cart</span>
-                <span className={filteringClass}>
-                    <input className={style.cartFilter} onFocus={this.startFiltering}
-                        ref={(input) => { this.filterInput = input; }} onBlur={this.closeFiltering} value={filterKey} onChange={this.changeFilter} />
-                    <span className={style.cartFilterIcon} onClick={this.openFiltering} />
-                </span>
+                {
+                    totalBro > 0 &&
+                    <span className={filteringClass}>
+                        <input className={style.cartFilter} onFocus={this.startFiltering}
+                            ref={(input) => { this.filterInput = input; }} onBlur={this.closeFiltering} value={filterKey} onChange={this.changeFilter} placeholder={this.state.isFiltering ? "Sortir by nama" : ""} />
+                        <span className={style.cartFilterIcon} onClick={this.openFiltering} />
+                    </span>
+                }   
                 <span className={style.headerWrapper}>
                     <span className={style.headerNama} onClick={this.props.SortByNama}>Nama</span>
                     <span className={style.headerJumlah} onClick={this.props.SortByJumlah}>Jumlah</span>
@@ -83,7 +86,7 @@ const Cart = React.createClass({
                 </table>
                 <span className={style.submitWrapper}>
                     <span className={style.submitTotal}>Total</span>
-                    <span className={style.submitAmount}>Rp {totalBro}</span>
+                    <span className={style.submitAmount}>Rp {totalBro.format()}</span>
                     <span className={style.submitBtn} onClick={this.props.ShowBeli}>Beli</span>
                 </span>
             </div>

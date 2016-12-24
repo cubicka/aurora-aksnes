@@ -2,53 +2,102 @@ import React from 'react'
 import styles from './signIn.css'
 import {connect} from 'react-redux'
 import Delivery from './delivery'
+import {Register, SignIn} from '../reducer/auth'
 
-const SignIn = React.createClass({
+const SignInX = React.createClass({
+    getInitialState() {
+        return {
+            username: "", password: "",
+        }
+    },
+    changeText(keyword) {
+        return (e) => {
+            this.setState({
+                [keyword]: e.target.value
+            })
+        }
+    },
+    checkEnter(e) {
+        if (e.keyCode === 13) {
+            this.signIn();
+        }
+    },
+    signIn() {
+        const {username, password} = this.state;
+        this.props.SignIn(username, password);
+    },
     render() {
+        const {username, password} = this.state;
         return (
             <div>
                 <img className={styles.closeBtn} src="close.png" alt="" onClick={this.props.HideSignIn} />
                 <span className={styles.title}>Masuk ke Akun Anda</span>
                 <div className={styles.inputWrapper}>
                     <label className={styles.inputLabel}>Username</label>
-                    <input />
+                    <input value={username} onChange={this.changeText('username')} onKeyDown={this.checkEnter} />
                 </div>
                 <div className={styles.inputWrapper}>
                     <label className={styles.inputLabel}>Password</label>
-                    <input type='password' />
+                    <input type="password" value={password} onChange={this.changeText('password')} onKeyDown={this.checkEnter} />
                     <img className={styles.eye} src="eye.png" alt="" />
                 </div>
-                <span className={styles.signInBtn}>Masuk</span>
+                <span className={styles.signInBtn} onClick={this.signIn}>Masuk</span>
                 <span className={styles.toRegister}>Belum punya akun? <span className={styles.registerLink} onClick={this.props.ToRegister}>Register disini</span></span>
             </div>
         );
     }
 })
 
-const Register = React.createClass({
+const RegisterX = React.createClass({
+    getInitialState() {
+        return {
+            username: "", password: "",
+            email: "", phone: ""
+        }
+    },
+    changeText(keyword) {
+        return (e) => {
+            this.setState({
+                [keyword]: e.target.value
+            })
+        }
+    },
+    setPhone(e) {
+    },
+    register() {
+        const {username, password, email, phone} = this.state;
+        this.props.Register(username, password, email, phone)
+    },
+    checkEnter(e) {
+        if (e.keyCode === 13) {
+            this.register();
+        }
+    },
     render() {
+        const {username, password, email, phone} = this.state;
+
         return (
             <div>
                 <img className={styles.closeBtn} src="close.png" alt="" onClick={this.props.HideSignIn} />
                 <span className={styles.title}>Daftar Akun Baru</span>
                 <div className={styles.inputWrapper}>
                     <label className={styles.inputLabel}>Username</label>
-                    <input />
+                    <input value={username} onChange={this.changeText('username')} onKeyDown={this.checkEnter} />
                 </div>
                 <div className={styles.inputWrapper}>
                     <label className={styles.inputLabel}>Email</label>
-                    <input />
+                    <input value={email} onChange={this.changeText('email')} onKeyDown={this.checkEnter} />
                 </div>
                 <div className={styles.inputWrapper}>
                     <label className={styles.inputLabel}>Nomor Handphone</label>
-                    <input />
+                    <input value={phone} onChange={this.changeText('phone')} onKeyDown={this.checkEnter} />
                 </div>
                 <div className={styles.inputWrapper}>
                     <label className={styles.inputLabel}>Password</label>
-                    <input type='password' />
+                    <input type="password" value={password} onChange={this.changeText('password')} onKeyDown={this.checkEnter} />
                     <img className={styles.eye} src="eye.png" alt="" />
                 </div>
-                <span className={styles.signInBtn}>Daftar</span>
+                <span className={styles.signInBtn} onClick={this.register}>Daftar</span>
                 <span className={styles.toRegister}>Sudah punya akun? <span className={styles.registerLink} onClick={this.props.ToSignIn}>Login disini</span></span>
             </div>
         );
@@ -69,11 +118,11 @@ const Modal = React.createClass({
                 <div className={modal === "beli" ? styles.modal2 : styles.modal}>
                 {
                     modal === "signIn" &&
-                    <SignIn {...this.props} />
+                    <SignInX {...this.props} />
                 }
                 {
                     modal === "register" &&
-                    <Register {...this.props} />
+                    <RegisterX {...this.props} />
                 }
                 {
                     modal === "beli" &&
@@ -106,6 +155,12 @@ function DispatchToProps(dispatch) {
             dispatch({
                 type: "auth/showSignIn"
             })
+        },
+        Register: (username, password, email, phone) => {
+            dispatch(Register(username, password, email, phone))
+        },
+        SignIn: (user, pass) => {
+            dispatch(SignIn(user, pass))
         }
     }
 }

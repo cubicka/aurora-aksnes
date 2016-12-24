@@ -344,7 +344,9 @@ export function Move(row, col) {
             }
 
             const newTimeout = setTimeout(() => {
-                dispatch(Query(item.keyword))
+                if (etalase.display.indexOf(item.realID) < 0) {
+                    dispatch(Query(item.keyword))
+                }
                 if (item.keyword !== item.nama && item.realID) {
                     dispatch(Emphasis(item.realID))
                 }
@@ -367,7 +369,7 @@ export function Move(row, col) {
         }
 
         const {idx, lastIdx} = cart;
-        if (row !== idx[0] && row !== lastIdx && item.keyword !== etalase.currentKeyword) {
+        if (row !== idx[0] && row !== lastIdx && item.keyword !== etalase.currentKeyword && etalase.display.indexOf(item.realID) < 0) {
             dispatch({
                 type: "etalase/startLoading",
                 idx: [row, col]

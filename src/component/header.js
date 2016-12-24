@@ -1,6 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {Sub as CartSub, UpdateKeyword} from '../reducer/cart'
+import {GetMe, Logout} from '../reducer/auth'
 import style from './header.css'
 
 const Header = React.createClass({
@@ -16,15 +17,28 @@ const Header = React.createClass({
             this.props.UpdateKeyword(cart.items[cart.items.length-1].idx, text);
         }
     },
+    componentDidMount() {
+        this.props.GetMe();
+    },
     render() {
-        const {query} = this.props;
+        const {query, me} = this.props;
 
         return (
             <div className={style.header}>
-                <span className={style.authWrapper}>
-                    <span className={style.login} onClick={this.props.ToSignIn}>Log In</span>
-                    <span className={style.signIn} onClick={this.props.ToRegister}>Sign Up</span>
-                </span>
+                {
+                    !me &&
+                    <span className={style.authWrapper}>
+                        <span className={style.login} onClick={this.props.ToSignIn}>Log In</span>
+                        <span className={style.signIn} onClick={this.props.ToRegister}>Sign Up</span>
+                    </span>
+                }
+                {
+                    me &&
+                    <span className={style.authWrapper}>
+                        <span className={style.login}>Hi {me}</span>
+                        <span className={style.signIn} onClick={this.props.Logout}>Logout</span>
+                    </span>
+                }
                 <input className={style.search} placeholder="Mencari sesuatu ..?" value={query} onChange={this.changeSearch} />
             </div>
         );
@@ -36,14 +50,20 @@ function StateToProps(state) {
     const lastCart = cart.items.length > 1 ? cart.items[cart.items.length - 2] : {};
     const query = lastCart.keyword === lastCart.nama && lastCart.nama ? lastCart.nama : "";
 
+    const {me} = state.auth
+
     return {
         cart: cart,
         lastCart, query,
+        me,
     }
 }
 
 function DispatchToProps(dispatch, ownProps) {
     return {
+        GetMe: () => {
+            dispatch(GetMe())
+        },
         TryDelete: (idx) => {
             dispatch({
                 type: "cart/delete",
@@ -62,6 +82,9 @@ function DispatchToProps(dispatch, ownProps) {
         },
         UpdateKeyword: (idx, text) => {
             dispatch(UpdateKeyword(idx, text));
+        },
+        Logout: () => {
+            dispatch(Logout());
         }
     }
 }

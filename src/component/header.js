@@ -13,7 +13,7 @@ const Header = React.createClass({
         } else if (query !== "") {
             this.props.UpdateKeyword(lastCart.idx, text);
         } else if (text !== "") {
-            this.props.UpdateKeyword(cart.items[cart.cartItem[cart.cartItem.length-1]].idx, text);
+            this.props.UpdateKeyword(cart.items[cart.items.length-1].idx, text);
         }
     },
     render() {
@@ -35,6 +35,8 @@ function StateToProps(state) {
     const cart = CartSub('cart/cart', state)
     const lastCart = cart.items.length > 1 ? cart.items[cart.items.length - 2] : {};
     const query = lastCart.keyword === lastCart.nama && lastCart.nama ? lastCart.nama : "";
+
+    console.log('again', cart, lastCart, query)
 
     return {
         cart: cart,

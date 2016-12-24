@@ -91,6 +91,8 @@ function Etalase(state) {
         return item.category;
     })
 
+    console.log('cats', categories)
+
     return {
         isDisplay: true,
         onDisplay: display,

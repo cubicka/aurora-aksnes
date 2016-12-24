@@ -11,8 +11,7 @@ function Root() {
     return (
         <Provider store={store}>
             <Router history={history}>
-                <Route path="/" component={ShoppingPage}>
-                </Route>
+                <Route path="/" component={ShoppingPage} />
             </Router>
         </Provider>
     );

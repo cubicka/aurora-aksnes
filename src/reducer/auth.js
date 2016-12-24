@@ -35,7 +35,7 @@ export function Register(username, password, email, phone) {
             })
 
             dispatch({
-                type: "auth/hideSignIn",
+                type: "auth/nextModal",
             })
         })
         .catch(function (err) {
@@ -123,7 +123,7 @@ export function SignIn(username, password) {
             })
 
             dispatch({
-                type: "auth/hideSignIn",
+                type: "auth/nextModal",
             })
         })
         .catch(function () {
@@ -132,9 +132,42 @@ export function SignIn(username, password) {
     }
 }
 
+export function SubmitAddr(name, phone, address, jam, tgl) {
+    return (dispatch) => {
+        return fetch(authUrl + '/address', {
+            credentials: 'include',
+            method: 'post',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                name, phone, address, jam, tgl
+            })
+        })
+        .then(function (resp) {
+            if (resp.ok) {
+                return resp.json();
+            }
+
+            throw new Error();
+        })
+        .then(function (resp) {
+            alert('Detail pengiriman telah disimpan.');
+            dispatch({
+                type: "auth/hideSignIn",
+            })
+        })
+        .catch(function () {
+            alert('Network error.');
+        })
+    }
+}
+
 const initialState = {
     modal: "",
-    me: ""
+    me: "",
+    prev: ""
 }
 
 function Reducer(state = initialState, action) {
@@ -151,8 +184,20 @@ function Reducer(state = initialState, action) {
             return lodash.assign({}, state, {modal: "register"})
         }
 
+        case "auth/nextModal": {
+            if (state.prev) {
+                return lodash.assign({}, state, {modal: "beli", prev: ""})
+            } else {
+                return lodash.assign({}, state, {modal: ""});
+            }
+        }
+
         case "auth/showBeli": {
-            return lodash.assign({}, state, {modal: "beli"})
+            if (state.me) {
+                return lodash.assign({}, state, {modal: "beli"})
+            } else {
+                return lodash.assign({}, state, {modal: "signIn", prev: "beli"});
+            }
         }
 
         case "auth/me": {

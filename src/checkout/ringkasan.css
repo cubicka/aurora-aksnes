@@ -1,0 +1,73 @@
+.ringkasanWrap {
+    width: 366px;
+    max-width: 366px;
+    /*height: 310px;*/
+    background-color: #fff;
+    border-radius: 4px;
+    border: solid 1px #dadada;
+    flex: 0 0 auto;
+    margin: 0 0 0 20px;
+    position: relative;
+    padding-bottom: 20px;
+}
+
+.title {
+    font-size: 16px;
+    font-weight: bold;
+    color: #187be7;
+    margin-top: 20px;
+    margin-left: 50px;
+    margin-bottom: 33px;
+    display: inline-block;
+}
+
+.itemWrap, .itemWrap2 {
+    display: block;
+    clear: both;
+    color: #575757;
+    font-weight: 400;
+    font-size: 16px;
+    padding: 0 15px 38px 19px;
+}
+
+.itemWrap .left, .itemWrap2 .left {
+    display: inline-block;
+    float: left;
+}
+
+.itemWrap .right, .itemWrap2 .right {
+    display: inline-block;
+    float: right;
+}
+
+.itemWrap2 {
+    color: #575757;
+    font-weight: bold;
+}
+
+.logo {
+    position: absolute;
+    top: 15px;
+    left: 10px;
+}
+
+.separator {
+    display: block;
+    height: 2px;
+    background-color: #ccc;
+    margin: 0 12px 20px;
+}
+
+.submitBtn {
+    width: 300px;
+    height: 42px;
+    border-radius: 4px;
+    background-color: #ec722d;
+    line-height: 42px;
+    font-size: 18px;
+    color: #fff;
+    display: block;
+    margin: 0 auto;
+    text-align: center;
+    cursor: pointer;
+}

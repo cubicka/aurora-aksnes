@@ -6,9 +6,10 @@ import HeaderComponent from '../component/header'
 
 const Pages = React.createClass({
     render() {
+        const path = this.props.routes[0].path
         return (
             <div>
-                <HeaderComponent />
+                <HeaderComponent path={path} />
                 <CartComponent />
                 <EtalaseComponent />
                 <SignInComponent />

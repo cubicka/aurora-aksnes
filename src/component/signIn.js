@@ -3,6 +3,7 @@ import styles from './signIn.css'
 import {connect} from 'react-redux'
 import Delivery from './delivery'
 import {Register, SignIn} from '../reducer/auth'
+import {Konfirmasi as Konf} from '../reducer/checkout'
 
 const SignInX = React.createClass({
     getInitialState() {
@@ -63,12 +64,16 @@ const RegisterX = React.createClass({
     },
     changeText(keyword) {
         return (e) => {
-            this.setState({
-                [keyword]: e.target.value
-            })
+            if (keyword !== 'phone') {
+                this.setState({
+                    [keyword]: e.target.value
+                })
+            } else {
+                this.setState({
+                    [keyword]: e.target.value.replace(/\D/g,'')
+                })
+            }
         }
-    },
-    setPhone(e) {
     },
     register() {
         const {username, password, email, phone} = this.state;
@@ -120,7 +125,25 @@ const RegisterX = React.createClass({
     }
 })
 
+const Konfirmasi = React.createClass({
+    render() {
+        return (
+            <div>
+                <img className={styles.closeBtn} src="close.png" alt="" onClick={this.props.HideSignIn} />
+                <span className={styles.title}>Konfirmasi</span>
+                <span className={styles.batal} onClick={this.props.HideSignIn}>Ganti pesanan</span>
+                <span className={styles.konfirmasi} onClick={this.props.Konf}>Ya, saya yakin</span>
+            </div>
+        );
+    }
+})
+
 const Modal = React.createClass({
+    componentDidUpdate() {
+        if (this.general) {
+            this.general.focus();
+        }
+    },
     render() {
         const {modal} = this.props;
 
@@ -130,21 +153,29 @@ const Modal = React.createClass({
 
         return (
             <div className={styles.wrapper}>
+                <input ref={(input) => { this.general = input; }} style={{opacity:0}} />
                 <div className={styles.backdrop} />
-                <div className={modal === "beli" ? styles.modal2 : styles.modal}>
                 {
-                    modal === "signIn" &&
-                    <SignInX {...this.props} />
+                    modal !== "shadow" &&
+                    <div className={modal === "beli" ? styles.modal2 : styles.modal}>
+                    {
+                        modal === "signIn" &&
+                        <SignInX {...this.props} />
+                    }
+                    {
+                        modal === "register" &&
+                        <RegisterX {...this.props} />
+                    }
+                    {
+                        modal === "beli" &&
+                        <Delivery {...this.props} />
+                    }
+                    {
+                        modal === "konfirmasi" &&
+                        <Konfirmasi {...this.props} />
+                    }
+                    </div>
                 }
-                {
-                    modal === "register" &&
-                    <RegisterX {...this.props} />
-                }
-                {
-                    modal === "beli" &&
-                    <Delivery {...this.props} />
-                }
-                </div>
             </div>
         );
     }
@@ -177,6 +208,9 @@ function DispatchToProps(dispatch) {
         },
         SignIn: (user, pass) => {
             dispatch(SignIn(user, pass))
+        },
+        Konf: () => {
+            dispatch(Konf())
         }
     }
 }

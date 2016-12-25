@@ -7,12 +7,22 @@ import {connect} from 'react-redux'
 
 const DeliveryConfirmation = React.createClass({
     getInitialState() {
+        let tgl;
+
+        if ('tgl' in this.props && 'now' in this.props) {
+            let d = new Date(this.props.now);
+            d.setDate(d.getDate() + this.props.tgl + 1);
+
+            let x = new Date();
+            tgl = d.getDate() - x.getDate() - 1;
+        }
+
         return {
-            tgl: -1,
-            jam: -1,
-            nama: "",
-            phone: "",
-            alamat: "",
+            tgl: tgl,
+            jam: this.props.jam,
+            name: this.props.name,
+            phone: this.props.phone,
+            alamat: this.props.address,
         }
     },
     getDates() {
@@ -53,7 +63,11 @@ const DeliveryConfirmation = React.createClass({
     },
     insertTxt(keyword) {
         return (e) => {
-            this.setState({[keyword]: e.target.value});
+            if (keyword !== 'phone') {
+                this.setState({[keyword]: e.target.value});
+            } else {
+                this.setState({[keyword]: e.target.value.replace(/\D/g, '')});
+            }
         }
     },
     render() {
@@ -108,6 +122,12 @@ const DeliveryConfirmation = React.createClass({
     }
 })
 
+function StateToProps(state) {
+    return {
+        ...state.checkout.alamat
+    }
+}
+
 function DispatchToProps(dispatch) {
     return {
         SubmitAddr: (name, phone, address, jam, tgl) => {
@@ -116,4 +136,4 @@ function DispatchToProps(dispatch) {
     }
 }
 
-export default connect(undefined, DispatchToProps)(DeliveryConfirmation);
+export default connect(StateToProps, DispatchToProps)(DeliveryConfirmation);

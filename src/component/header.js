@@ -21,7 +21,7 @@ const Header = React.createClass({
         this.props.GetMe();
     },
     render() {
-        const {query, me} = this.props;
+        const {query, me, path} = this.props;
 
         return (
             <div className={style.header}>
@@ -39,7 +39,10 @@ const Header = React.createClass({
                         <span className={style.signIn} onClick={this.props.Logout}>Logout</span>
                     </span>
                 }
-                <input className={style.search} placeholder="Mencari sesuatu ..?" value={query} onChange={this.changeSearch} />
+                {
+                    path === "/" &&
+                    <input className={style.search} placeholder="Mencari sesuatu ..?" value={query} onChange={this.changeSearch} />
+                }
             </div>
         );
     }

@@ -1,6 +1,7 @@
 import fetch from 'isomorphic-fetch'
 import config from '../config'
 import lodash from 'lodash'
+import {push} from 'react-router-redux'
 
 const authUrl = config.backendUrl + '/auth'
 
@@ -61,7 +62,11 @@ export function GetMe() {
             if (resp.data) {
                 dispatch({
                     type: 'auth/me',
-                    me: resp.data
+                    me: resp.data.me
+                })
+                dispatch({
+                    type: 'checkout/editAlamat',
+                    alamat: resp.data.address
                 })
             }
         })
@@ -133,7 +138,9 @@ export function SignIn(username, password) {
 }
 
 export function SubmitAddr(name, phone, address, jam, tgl) {
-    return (dispatch) => {
+    return (dispatch, getState) => {
+        const {prev} = getState().auth;
+
         return fetch(authUrl + '/address', {
             credentials: 'include',
             method: 'post',
@@ -154,9 +161,17 @@ export function SubmitAddr(name, phone, address, jam, tgl) {
         })
         .then(function (resp) {
             alert('Detail pengiriman telah disimpan.');
-            dispatch({
-                type: "auth/hideSignIn",
-            })
+            if (prev !== "konfirmasi") {
+                dispatch({
+                    type: "auth/hideSignIn",
+                })
+
+                dispatch(push('/checkout'))
+            } else {
+                dispatch({
+                    type: "auth/konfirmasi",
+                })
+            }
         })
         .catch(function () {
             alert('Network error.');
@@ -172,6 +187,10 @@ const initialState = {
 
 function Reducer(state = initialState, action) {
     switch(action.type) {
+        case "auth/showShadow": {
+            return lodash.assign({}, state, {modal: "shadow"})
+        }
+
         case "auth/showSignIn": {
             return lodash.assign({}, state, {modal: "signIn"})
         }
@@ -198,6 +217,14 @@ function Reducer(state = initialState, action) {
             } else {
                 return lodash.assign({}, state, {modal: "signIn", prev: "beli"});
             }
+        }
+
+        case "auth/konfirmasi": {
+            return lodash.assign({}, state, {modal: "konfirmasi", prev: ""});
+        }
+
+        case "auth/fixDulu": {
+            return lodash.assign({}, state, {modal: "beli", prev: "konfirmasi"});
         }
 
         case "auth/me": {

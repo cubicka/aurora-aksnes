@@ -190,6 +190,7 @@ width: 100%;
   height: 72px;
   padding-left: 10px;
   padding-top: 10px;
+  padding-bottom: 10px;
   width: 98%;
   text-indent: 0;
 }
@@ -206,8 +207,25 @@ width: 100%;
   font-size: 15px;
   margin-top: 36px;
   cursor: pointer;
+  margin-bottom: 20px;
 }
 
 .konfirmasiBtn:hover {
   box-shadow: 2px 2px #aaa;
+}
+
+.konfirmasi, .batal {
+  margin: 0 10px;
+  padding: 10px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.konfirmasi {
+  background-color: #ec722d;
+  color: #fff;
+}
+
+.batal {
+  background-color: #e8e8e8;
 }

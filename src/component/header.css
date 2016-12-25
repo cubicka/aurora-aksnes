@@ -3,6 +3,7 @@
     background-color: #187be8;
     width: 100%;
     margin-bottom: 20px;
+    display: block;
 }
 
 .authWrapper {

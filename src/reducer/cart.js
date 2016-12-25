@@ -304,7 +304,12 @@ export default (state = prevState || initialState, action) => {
             return SaveToComp(syalala);
         }
 
+        case "cart/clear": {
+            return SaveToComp(initialState);
+        }
+
         case "cart/inc": {
+            console.log('inc', action);
             const syalala = Inc(state, action);
 
             return OneWay(state, syalala);
@@ -687,17 +692,31 @@ function Cart(state) {
     const {items, idx, cartItem, filterKey} = cart;
     const {display} = etalase;
 
-    return {
-        items: lodash.map(cartItem, (id) => {
-            const found = lodash.find(display, (idx) => {
-                return idx === items[id].realID;
-            })
+    const itemsRes = lodash.map(cartItem, (id) => {
+        const found = lodash.find(display, (idx) => {
+            return idx === items[id].realID;
+        })
 
-            return lodash.assign({}, items[id], {
-                price: items[id].realID ? itemColls[items[id].realID].harga : 0,
-                inDisplay: items[id].realID && found
-            })  
-        }),
+        const realID = items[id].realID;
+        return lodash.assign({}, items[id], {
+            price: realID ? itemColls[realID].harga : 0,
+            inDisplay: items[id].realID && found,
+            ukuran: realID && itemColls[realID].ukuran
+        })
+    })
+
+    const total = lodash.reduce(itemsRes, (acc, item) => {
+        const price = parseInt(item.price, 10);
+        if (item.keyword === item.nama || !price || !item.quantity) {
+            return acc;
+        }
+
+        return acc + (price * item.quantity);
+    }, 0)
+
+    return {
+        items: itemsRes,
+        total,
         idx, filterKey,
     }
 }

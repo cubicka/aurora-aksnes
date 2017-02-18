@@ -5,15 +5,15 @@
      */
     "apps" : [
         {
-            "name" : "frontend",
+            "name" : "frontendretail",
             "script" : "server.js",
-            "env_staging": {
+            "env_production": {
                 "NODE_ENV": "production",
-                "PORT": 3000
+                "PORT": 3004
             },
             "merge_logs": true,
-            "out_file": "/home/ubuntu/.pm2/logs/frontend-out.log",
-            "error_file": "/home/ubuntu/.pm2/logs/frontend-error.log"
+            "out_file": "/home/ubuntu/.pm2/logs/frontendretail-out.log",
+            "error_file": "/home/ubuntu/.pm2/logs/frontendretail-error.log"
         }
     ],
 
@@ -24,11 +24,11 @@
     "deploy" : {
         "live" : {
             "user" : "ubuntu",
-            "host" : "ec2-35-163-116-219.us-west-2.compute.amazonaws.com",
+            "host" : "ec2-35-167-40-228.us-west-2.compute.amazonaws.com",
             "ref" : "origin/master",
             "repo": "git@github.com:cubicka/aurora-aksnes.git",
-            "path" : "/home/ubuntu/frontend",
-            "post-deploy" : "npm i && npm run build && pm2 startOrRestart ecosystem.live.json --env live"
+            "path" : "/home/ubuntu/frontendretail",
+            "post-deploy" : "npm i && npm run build && pm2 startOrRestart ecosystem.live.json --env production"
         }
     }
 }

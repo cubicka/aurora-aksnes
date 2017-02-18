@@ -9,7 +9,7 @@
             "script" : "server.js",
             "env_production": {
                 "NODE_ENV": "production",
-                "PORT": 3004
+                "PORT": 8000
             },
             "merge_logs": true,
             "out_file": "/home/ubuntu/.pm2/logs/frontendretail-out.log",

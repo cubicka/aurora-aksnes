@@ -359,7 +359,7 @@ export function Move(row, col) {
         const item = cart.items[row];
         // if (item && item.keyword && (item.keyword !== etalase.currentKeyword || etalase.loading)) {
             const {timeout} = cart;
-            if (timeout["query"]) {
+            if (timeout && timeout["query"]) {
                 clearTimeout(timeout["query"]);
             }
 

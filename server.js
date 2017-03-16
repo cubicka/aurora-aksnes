@@ -4,7 +4,7 @@ const app = express();
 
 
 // app.use('/css', express.static(__dirname + '/css'));
-// app.use('/img', express.static(__dirname + '/img'));
+app.use('/img', express.static(__dirname + '/img'));
 // app.use('/static', express.static(__dirname + '/static'));
 app.use(express.static('./build', {maxAge: 86400000}));
 

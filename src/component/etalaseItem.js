@@ -55,8 +55,8 @@ const EtalaseItem = React.createClass({
         this.props.UpdateQuantity(q || 0);
     },
     render() {
-        const {name: nama, price: harga, ukuran, image, count} = this.props;
-        console.log('p', this.props)
+        const {name: nama, harga, ukuran, image, count} = this.props;
+        // console.log('p', this.props)
         const namakelas = count > 0 ? style.item + " " + style.selected : style.item;
 
         return (

@@ -5,15 +5,15 @@
      */
     "apps" : [
         {
-            "name" : "frontendretail",
+            "name" : "groseria-front",
             "script" : "server.js",
             "env_production": {
                 "NODE_ENV": "production",
-                "PORT": 8000
+                "PORT": 3000
             },
             "merge_logs": true,
-            "out_file": "/home/ubuntu/.pm2/logs/frontendretail-out.log",
-            "error_file": "/home/ubuntu/.pm2/logs/frontendretail-error.log"
+            "out_file": "/home/ubuntu/.pm2/logs/groseria-front-out.log",
+            "error_file": "/home/ubuntu/.pm2/logs/groseria-front-error.log"
         }
     ],
 
@@ -24,10 +24,10 @@
     "deploy" : {
         "live" : {
             "user" : "ubuntu",
-            "host" : "ec2-35-167-40-228.us-west-2.compute.amazonaws.com",
+            "host" : "ec2-52-221-218-87.ap-southeast-1.compute.amazonaws.com",
             "ref" : "origin/master",
             "repo": "git@github.com:cubicka/aurora-aksnes.git",
-            "path" : "/home/ubuntu/frontendretail",
+            "path" : "/home/ubuntu/groseria-front",
             "post-deploy" : "npm i && npm run build && pm2 startOrRestart ecosystem.live.json --env production"
         }
     }
